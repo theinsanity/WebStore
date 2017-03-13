@@ -22,7 +22,7 @@ namespace WebStore.Services
             var userDtos = new List<UserDto>();
             foreach (User user in _userRepository.GetAllUsers())
             {
-                userDtos.Add(new UserDto { UserName = user.UserName, Email = user.Email });
+                userDtos.Add(new UserDto { UserName = user.UserName, Email = user.Email , Password = user.Password , Credit = user.Credit });
             }
            
             return userDtos;

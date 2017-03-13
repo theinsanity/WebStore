@@ -17,7 +17,9 @@ namespace WebStore.Data
                 new User
                 {
                     UserName= "pera",
-                    Email = "pera@pera.com"
+                    Password="123",
+                    Email = "pera@peran.com",
+                    Credit = 1000
                 }
             };
         }

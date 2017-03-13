@@ -38,7 +38,8 @@ namespace WebStore.DependencyResolving
         {
             _container.Register<IUserRepository, UserRepository>(Lifestyle.Transient);
             _container.Register<IUserService, UserService>(Lifestyle.Transient);
-           
+            _container.Register<IAuctionRepository, AuctionRepository>(Lifestyle.Transient);
+            _container.Register<IAuctionService, AuctionService>(Lifestyle.Transient);
         }
        
     }
