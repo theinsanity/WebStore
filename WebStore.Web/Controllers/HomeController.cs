@@ -13,7 +13,7 @@ namespace WebStore.Web.Controllers
         
 
         private readonly IAuctionService _auctionService;
-        public HomeController(IAuctionService auctionService)
+        public HomeController(IAuctionService auctionService) 
         {
             _auctionService = auctionService;
         }
