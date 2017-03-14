@@ -9,6 +9,7 @@ namespace WebStore.Data.Contracts.RepositoryInterface
 {
    public interface IUserRepository
     {
+         
         IEnumerable<User> GetAllUsers();
     }
 }

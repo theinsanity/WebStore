@@ -22,12 +22,32 @@ namespace WebStore.Services
             var userDtos = new List<UserDto>();
             foreach (User user in _userRepository.GetAllUsers())
             {
-                userDtos.Add(new UserDto { UserName = user.UserName, Email = user.Email , Password = user.Password , Credit = user.Credit });
+                userDtos.Add(new UserDto { UserName = user.UserName, Email = user.Email, Password = user.Password, Credit = user.Credit });
             }
-           
+
             return userDtos;
 
 
         }
+        public string CheckUser(UserDto _user)
+        {
+
+            var userDtos = new List<UserDto>();
+            foreach (User user in _userRepository.GetAllUsers())
+            {
+                if (_user.Email == user.Email)
+                {
+                    return "Email already exists!";
+                }
+                if (_user.UserName == user.UserName)
+                {
+                    return "Username already exists!";
+                }
+            }
+            return "Success";
+        }
+
+
+
     }
 }

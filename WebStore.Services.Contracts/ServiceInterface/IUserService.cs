@@ -10,5 +10,6 @@ namespace WebStore.Services.Contracts.ServiceInterface
     public interface IUserService
     {
         IEnumerable<UserDto> GetAllUsers();
+        string CheckUser(UserDto _user);
     }
 }
