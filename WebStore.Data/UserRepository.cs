@@ -41,6 +41,7 @@ namespace WebStore.Data
             adp.Fill(ds);
             var myData = ds.Tables[0].AsEnumerable().Select(r => new User
             {
+<<<<<<< HEAD
                 UserName = r.Field<string>("UserName"),
                 Password = r.Field<string>("Password"),
                 Email = r.Field<string>("Email"),
@@ -48,6 +49,17 @@ namespace WebStore.Data
             });
            return myData.ToList();
             
+=======
+                new User
+                {
+                    UserName= "pera",
+                    Password="123",
+                    Email = "pera@peran.com",
+                    Credit = 1000
+                }
+              
+            };
+>>>>>>> afd43be49a46b45688c529871ba11f37fa537811
         }
     }
 }

@@ -10,5 +10,8 @@ namespace WebStore.Services.Contracts.ServiceInterface
     public interface IAuctionService
     {
         IEnumerable<AuctionDto> GetAllAuctions();
+        IEnumerable<AuctionDto> GetAllSold(UserDto user);
+        IEnumerable<AuctionDto> GetAllBought(UserDto user);
     }
+    
 }
