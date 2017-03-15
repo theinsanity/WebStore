@@ -11,8 +11,13 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
-        Ovde pravimo aukcije
-    </div>
+    @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
+    {
+    <form method="post">
+        <input type="text" name="name" placeholder="Auction name" required="required" />
+        <input type="text" name="price" placeholder="Price" required="required" />
+        <input type="submit" value="Submit" />
+    </form>
+    }
 </body>
 </html>
