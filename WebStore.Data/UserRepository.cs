@@ -20,14 +20,8 @@ namespace WebStore.Data
                     Password="123",
                     Email = "pera@peran.com",
                     Credit = 1000
-                },
-                new User
-                {
-                    UserName= "govedo",
-                    Password="govedo",
-                    Email = "govedo@per.com",
-                    Credit = 1000
                 }
+              
             };
         }
     }

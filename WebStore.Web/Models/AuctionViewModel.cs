@@ -8,5 +8,7 @@ namespace WebStore.Web.Models
     public class AuctionViewModel
     {
         public IEnumerable<AuctionDto> Auctions { get; set; }
+        public IEnumerable<AuctionDto> AuctionsBought { get; set; }
+        public IEnumerable<AuctionDto> AuctionsSold { get;  set; }
     }
 }

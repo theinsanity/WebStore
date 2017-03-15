@@ -1,4 +1,7 @@
-﻿@model WebStore.Web.Models.UsersViewModel
+﻿@model WebStore.Web.Models.AuctionViewModel
+
+
+
 
 <!DOCTYPE html>
 
@@ -8,15 +11,43 @@
     <title>Index</title>
 </head>
 <body>
-    <div> 
-
-        @foreach (var user in Model.Users)
-        {
-            <h1>@user.UserName</h1>
-            <h1>@user.Email </h1>
-            <h1>@user.Credit</h1>
-        }
-
+    <!-- pera treba da postane Model, tj da se vuce iz repozitorijuma-->
+    <!-- Credit treba da se vuce iz repozitorijuma za tu sesiju-->
+    <div id="nav">
+    
+    
     </div>
+    
+    
+    
+    
+    
+    
+    
+    <p>Sold Items</p>
+    <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+        @foreach (var auction1 in Model.AuctionsSold)
+        {
+            <tr style="border:1px solid black;">
+                <td style="border:1px solid black;">@auction1.Id</td>
+                <td style="border:1px solid black;">@auction1.Name</td>
+                <td style="border:1px solid black;">@auction1.Price</td>
+                <td style="border:1px solid black;">@auction1.Buyer</td>
+            </tr>
+               
+        }
+    </table> 
+    <p>Bought Items</p>
+    <table style="width:100%;border:1px solid black;border-collapse:collapse">
+        @foreach (var auction1 in Model.AuctionsBought)
+        {
+            <tr style="border:1px solid black;">
+                <td style="border:1px solid black;">@auction1.Id</td>
+                <td style="border:1px solid black;">@auction1.Name</td>
+                <td style="border:1px solid black;">@auction1.Price</td>
+                <td style="border:1px solid black;">@auction1.Seller</td>
+            </tr>
+
+        }
 </body>
 </html>

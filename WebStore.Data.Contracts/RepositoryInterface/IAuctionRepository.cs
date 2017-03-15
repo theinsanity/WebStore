@@ -10,5 +10,7 @@ namespace WebStore.Data.Contracts.RepositoryInterface
     public interface IAuctionRepository
     {
         IEnumerable<Auction> GetAllAuctions();
+        IEnumerable<Auction> GetAllSold();
+        IEnumerable<Auction> GetAllBought();
     }
 }
