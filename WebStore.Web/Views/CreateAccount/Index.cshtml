@@ -1,4 +1,4 @@
-﻿
+﻿@model WebStore.Web.Models.UsersViewModel
 @{
     ViewBag.Title = "Index";
    string  un = Request["userame"];
@@ -16,18 +16,8 @@
     <h1>Create Account</h1>
     @using (Html.BeginForm("RedirectToLoginPage", "CreateAccount", FormMethod.Post))
     {
-        <form method="post">
-<input type="text" name="username" placeholder="username" required="required" /><br />
+       @Html.TextAreaFor(m => m.UserName)
 
-<input type="email" name="email" placeholder="email" required="required" /><br />
-
-<input type="password" name="password" placeholder="password" required="required" /><br />
-
-<input type="password" name="repeat_password" placeholder="repeat password" required="required"  /><br />
-
-<input type="submit" value="Submit" /><br />
-
-</form>
     }
 
 </body>
