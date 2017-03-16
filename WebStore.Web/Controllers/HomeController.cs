@@ -33,7 +33,7 @@ namespace WebStore.Web.Controllers
         }
 
        
-        public ActionResult Delete(AuctionViewModel wm)
+        public ActionResult Buy(AuctionViewModel wm)
         {
             AuctionDto auction = new AuctionDto();
             auction.Buyer = "Pera";

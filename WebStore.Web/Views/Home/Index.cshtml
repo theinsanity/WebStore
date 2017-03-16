@@ -18,7 +18,7 @@
             name:@auction.Name
             price:@auction.Price
             seller:@auction.Seller
-          <button> @Html.Action("Delete","Home",new { Id = auction.Id }) </button>
+          <button> @Html.Action("Buy","Home",new { Id = auction.Id }) </button>
         
           </form>
         }
