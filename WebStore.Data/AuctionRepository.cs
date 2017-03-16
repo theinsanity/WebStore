@@ -86,21 +86,6 @@ namespace WebStore.Data
 
 
 
-<<<<<<< HEAD
-               new Auction
-               {
-                   Id = 4,
-                   Name="Pokemon",
-                   Price=69,
-                   Buyer="Jovan",
-                   Seller="Pera",
-                   Status="Sold"
-               }
-            };
-        }
-=======
->>>>>>> b63d673b8d8602fdde19837486fe52cadd13c0fe
-
         public IEnumerable<Auction> GetAllSold()
         {
             return new List<Auction>
@@ -256,7 +241,6 @@ namespace WebStore.Data
                    Buyer = "Pera",
                    Seller = "Goran",
                    Status = "Sold"
-<<<<<<< HEAD
                },
                new Auction
                {
@@ -294,8 +278,7 @@ namespace WebStore.Data
                    Seller = "Pera",
                    Status = "Sold"
 
-=======
->>>>>>> b63d673b8d8602fdde19837486fe52cadd13c0fe
+
                }
             };
 
