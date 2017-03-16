@@ -48,7 +48,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 4,
-                   Name="Vibrator",
+                   Name="Pokemon",
                    Price=69,
                    Buyer="Jovan",
                    Seller="Pera",
@@ -96,7 +96,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 4,
-                   Name="Vibrator",
+                   Name="Vanzemaljac",
                    Price=69,
                    Buyer="Jovan",
                    Seller="Pera",
@@ -105,7 +105,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 5,
-                   Name = "Vazelin",
+                   Name = "Frizbi",
                    Price=30,
                    Buyer="Jovan",
                    Seller="Pera",
@@ -131,15 +131,6 @@ namespace WebStore.Data
                },
                new Auction
                {
-                   Id = 7,
-                   Name = "Crnac",
-                   Price = 2000,
-                   Buyer = "Pera",
-                   Seller = "Ambasada Nigerije i Juznog Sudana",
-                   Status = "Sold"
-               },
-               new Auction
-               {
                    Id=8,
                    Name = "Uranijum U-32",
                    Price = 10000000,
@@ -150,12 +141,11 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 9,
-                   Name = "Tajlandjanka",
+                   Name = "Item 90",
                    Price = 2,
                    Buyer = "Jovan",
                    Seller = "Pera",
                    Status = "Sold"
-
                }
 
             };
@@ -199,7 +189,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 4,
-                   Name="Vibrator",
+                   Name="Item 4",
                    Price=69,
                    Buyer="Jovan",
                    Seller="Pera",
@@ -208,7 +198,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 5,
-                   Name = "Vazelin",
+                   Name = "Item 5",
                    Price=30,
                    Buyer="Jovan",
                    Seller="Pera",
@@ -217,7 +207,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 6,
-                   Name = "Grobna parcela",
+                   Name = "Item 6",
                    Price = 2000,
                    Buyer = "Pera",
                    Seller = "Goran",
@@ -235,10 +225,10 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 7,
-                   Name = "Crnac",
+                   Name = "Crna majica",
                    Price = 2000,
                    Buyer = "Pera",
-                   Seller = "Ambasada Nigerije i Juznog Sudana",
+                   Seller = "Milan",
                    Status = "Sold"
                },
                new Auction
@@ -253,7 +243,7 @@ namespace WebStore.Data
                new Auction
                {
                    Id = 9,
-                   Name = "Tajlandjanka",
+                   Name = "Item 3",
                    Price = 2,
                    Buyer = "Jovan",
                    Seller = "Pera",

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebStore.Services.Contracts.ServiceInterface;
 using WebStore.Services.Contracts.Dto;
+using WebStore.Web.Models;
 namespace WebStore.Web.Controllers
 {
     public class CreateAccountController : Controller
@@ -16,7 +17,7 @@ namespace WebStore.Web.Controllers
         }
 
         
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult RedirectToLoginPage()
         {
             UserDto user = new UserDto();
@@ -33,11 +34,29 @@ namespace WebStore.Web.Controllers
             else
                 return Content(condition);
 
+        }*/
+       [HttpPost]
+       public ActionResult Create(CreateAcccountViewModel newUser)
+        {
+            if (ModelState.IsValid == true) 
+            {
+                /* check for passrwords */
+                if (newUser.Password != newUser.RepeatPassword)
+                {
+                    return Content("Passwords arent correct");
+                }
+                /* add to database */
+                return RedirectToAction("Index", "Login", null);
+            }
+            else
+            {
+                return Content("Ne valja");
+            }
         }
-       
         public ActionResult Index()
         {
-            return View();
+            var newUser = new CreateAcccountViewModel();
+            return View(newUser);
         }
     }
 }
