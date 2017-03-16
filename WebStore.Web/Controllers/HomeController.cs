@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebStore.Services.Contracts.Dto;
 using WebStore.Services.Contracts.ServiceInterface;
 using WebStore.Web.Models;
 
@@ -15,12 +16,13 @@ namespace WebStore.Web.Controllers
         private readonly IAuctionService _auctionService;
         public HomeController(IAuctionService auctionService) 
         {
+            
             _auctionService = auctionService;
         }
-
+        
         public ActionResult Index()
         {
-            var LoggedUser = "Pera";
+            
             var auctions = _auctionService.GetAllAuctions();
             return View(new AuctionViewModel { Auctions = auctions });
         }
@@ -28,6 +30,17 @@ namespace WebStore.Web.Controllers
         public ActionResult CreateAuction()
         {
             return RedirectToAction("Index", "CreateAuction");
+        }
+
+       
+        public ActionResult Delete(AuctionViewModel wm)
+        {
+            AuctionDto auction = new AuctionDto();
+            auction.Buyer = "Pera";
+            auction.Id = wm.Id;
+            _auctionService.UpdateAuction(auction);
+
+            return Content("Buy");
         }
 
     }

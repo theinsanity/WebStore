@@ -151,6 +151,7 @@
     </Compile>
     <Compile Include="Models\AuctionViewModel.cs" />
     <Compile Include="Models\CreateAcccountViewModel.cs" />
+    <Compile Include="Models\CreateAuctionViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,4 +1,4 @@
-﻿
+﻿@model WebStore.Web.Models.CreateAuctionViewModel
 @{
     Layout = null;
 }
@@ -14,8 +14,15 @@
     @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
     {
     <form method="post">
-        <input type="text" name="name" placeholder="Auction name" required="required" />
-        <input type="text" name="price" placeholder="Price" required="required" />
+
+        <div>
+            <p>@Html.TextBoxFor(m => m.Name) Item Name</p>
+        </div>
+
+        <div>
+            <p>@Html.TextBoxFor(m => m.Price) Price</p>
+        </div>
+
         <input type="submit" value="Submit" />
     </form>
     }
