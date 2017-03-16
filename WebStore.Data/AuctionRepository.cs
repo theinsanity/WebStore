@@ -35,7 +35,7 @@ namespace WebStore.Data
             return entity;
         }
 
-        private  List<Auction> CreateCommand(string queryString,
+        private  List<Auction> SelectCommand(string queryString,
             string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(
@@ -60,12 +60,25 @@ namespace WebStore.Data
                 return result;
             }
         }
+        private void CreateCommand(string queryString,
+            string connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+            }
+        }
 
         public IEnumerable<Auction> GetAllAuctions()
         {
             string query = "Select * from [Auction]";
             List<Auction> Data = new List<Auction>();
-            Data = CreateCommand(query, ConnectionString);
+            Data = SelectCommand(query, ConnectionString);
             return Data;
 
         }
