@@ -13,40 +13,60 @@ namespace WebStore.Data
 {
     public class AuctionRepository : IAuctionRepository
     {
+        private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
 
-        SqlConnection conn;
-        SqlDataAdapter adp;
-        DataSet ds;
-        SqlCommand sqlc;
 
-        public AuctionRepository()
-        {
-            conn = new SqlConnection("Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True");
+        //SqlCommand sqlc = new SqlCommand();
+
+
+
+        public Auction MapTableEnityToObject(IDataRecord record)
+        { 
+            Auction entity = new Auction();
+            entity.Id = (int)record["Id"];
+            entity.Name = (string)record["Name"];
+            entity.Price = (double)record["Price"];
+            entity.Seller = (string)record["Seller"];
+            if (record["Buyer"] == DBNull.Value)
+                entity.Buyer = string.Empty;
+            else 
+                entity.Buyer = (string)record["Buyer"];
+            entity.Status = (string)record["Status"];
+            return entity;
         }
-        private void OpenCloseConnection()
+
+        private  List<Auction> CreateCommand(string queryString,
+            string connectionString)
         {
-            conn.Open();
-            sqlc.ExecuteNonQuery();
-            conn.Close();
+            using (SqlConnection connection = new SqlConnection(
+                       connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                List<Auction> result = new List<Auction>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        Auction act = new Auction();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
         }
-
-
 
         public IEnumerable<Auction> GetAllAuctions()
         {
-            adp = new SqlDataAdapter("Select * from [Auction]", conn);
-            ds = new DataSet();
-            adp.Fill(ds);
-            var myData = ds.Tables[0].AsEnumerable().Select(r => new Auction
-            {
-
-                Id = r.Field<int>("Id"),
-                Name = r.Field<string>("Name"),
-                Price = r.Field<double>("Price"),
-                Seller = r.Field<string>("Seller"),
-                Status = r.Field<string>("Status")
-            });
-            return myData.ToList();
+            string query = "Select * from [Auction]";
+            List<Auction> Data = new List<Auction>();
+            Data = CreateCommand(query, ConnectionString);
+            return Data;
 
         }
 
