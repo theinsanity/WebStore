@@ -12,47 +12,55 @@ namespace WebStore.Data
 {
     public class UserRepository : IUserRepository
     {
-        SqlConnection conn;
-        SqlDataAdapter adp;
-        DataSet ds;
-        SqlCommand sqlc;
-      public UserRepository()
+        private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
+
+        public User MapTableEnityToObject(IDataRecord record)
         {
-            conn = new SqlConnection("Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True");
+            User entity = new User();
+            
+            entity.UserName = (string)record["UserName"];
+            entity.Email = (string)record["Email"];
+            entity.Password = (string)record["Password"];
+            entity.Credit = (double)record["Credit"];
+
+
+            return entity;
         }
-      private void OpenCloseConnection()
+        private List<User> CreateCommand(string queryString,
+            string connectionString)
         {
-            conn.Open();
-            sqlc.ExecuteNonQuery();
-            conn.Close();
+            using (SqlConnection connection = new SqlConnection(
+                       connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<User> result = new List<User>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        User act = new User();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
         }
 
 
 
         public IEnumerable<User> GetAllUsers()
         {
-            /*
-              U SQL Adapteru proslediti Upit.
-              Za sad radi testiranja vracamo listu
-              TODO: Umesto liste -> Json
-            */
-            adp = new SqlDataAdapter("Select * from [User]", conn);
-            ds = new DataSet();
-            adp.Fill(ds);
-            var myData = ds.Tables[0].AsEnumerable().Select(r => new User
-            {
-
-                UserName = r.Field<string>("UserName"),
-                Password = r.Field<string>("Password"),
-                Email = r.Field<string>("Email"),
-                Credit = r.Field<double>("Credit")
-            });
-           return myData.ToList();
-            
-
-              
-              
-            
+            string query = "Select * from [User]";
+            List<User> Data = new List<User>();
+            Data = CreateCommand(query, ConnectionString);
+            return Data;
 
         }
     }
