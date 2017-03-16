@@ -5,46 +5,55 @@ using System.Text;
 using System.Threading.Tasks;
 using WebStore.Data.Contracts.Models;
 using WebStore.Data.Contracts.RepositoryInterface;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+
 namespace WebStore.Data
 {
     public class AuctionRepository : IAuctionRepository
     {
+
+        SqlConnection conn;
+        SqlDataAdapter adp;
+        DataSet ds;
+        SqlCommand sqlc;
+
+        public AuctionRepository()
+        {
+            conn = new SqlConnection("Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True");
+        }
+        private void OpenCloseConnection()
+        {
+            conn.Open();
+            sqlc.ExecuteNonQuery();
+            conn.Close();
+        }
+
+
+
         public IEnumerable<Auction> GetAllAuctions()
         {
-            return new List<Auction>
+            adp = new SqlDataAdapter("Select * from [Auction]", conn);
+            ds = new DataSet();
+            adp.Fill(ds);
+            var myData = ds.Tables[0].AsEnumerable().Select(r => new Auction
             {
-                new Auction
-                {
-                    Id=1,
-                    Name="Item1",
-                    Price=10,
-                    Buyer=null,
-                    Seller="Pera",
-                    Status="Pending"
-               },
-               new Auction {
-                    Id=2,
-                    Name="Item2",
-                    Price=20,
-                    Buyer=null,
-                    Seller="Laza",
-                    Status="Pending"
 
+                Id = r.Field<int>("Id"),
+                Name = r.Field<string>("Name"),
+                Price = r.Field<double>("Price"),
+                Seller = r.Field<string>("Seller"),
+                Status = r.Field<string>("Status")
+            });
+            return myData.ToList();
 
-                },
-               new Auction
-               {
-                   Id=3,
-                   Name="Item3",
-                   Price=30,
-                   Buyer="Pera",
-                   Seller="Laza",
-                   Status="Sold"
+        }
 
 
 
-               },
 
+<<<<<<< HEAD
                new Auction
                {
                    Id = 4,
@@ -56,6 +65,8 @@ namespace WebStore.Data
                }
             };
         }
+=======
+>>>>>>> b63d673b8d8602fdde19837486fe52cadd13c0fe
 
         public IEnumerable<Auction> GetAllSold()
         {
@@ -212,6 +223,7 @@ namespace WebStore.Data
                    Buyer = "Pera",
                    Seller = "Goran",
                    Status = "Sold"
+<<<<<<< HEAD
                },
                new Auction
                {
@@ -249,14 +261,14 @@ namespace WebStore.Data
                    Seller = "Pera",
                    Status = "Sold"
 
+=======
+>>>>>>> b63d673b8d8602fdde19837486fe52cadd13c0fe
                }
-
             };
+
+
+
         }
-
-
-
-
 
     }
 }

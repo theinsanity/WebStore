@@ -20,11 +20,9 @@ namespace WebStore.Web.Controllers
         public ActionResult Create()
         {
             AuctionDto auction = new AuctionDto();
-            auction.Name = Request["name"];
             auction.Price = Convert.ToDouble(Request["price"]);
             auction.Seller = "Pera";
             
-            // _userService.CreateAuction(auction);
             return RedirectToAction("Index", "Home", null);
         }
 
