@@ -15,8 +15,7 @@ namespace WebStore.Data
     {
         private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
 
-
-        //SqlCommand sqlc = new SqlCommand();
+        
 
 
 
@@ -60,17 +59,39 @@ namespace WebStore.Data
                 return result;
             }
         }
-        private void CreateCommand(string queryString,
-            string connectionString)
+        private void CreateCommand(
+            string connectionString,Auction auction)
         {
+            string queryString = "Insert into [Auction] (Name, Price, Buyer, Seller, Status) values(@name,@price,null,@seller,'Pending')";
+
             using (SqlConnection connection = new SqlConnection(
                       connectionString))
             {
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(queryString, connection);
-                SqlDataReader reader = command.ExecuteReader();
+                command.Parameters.AddWithValue("@name", auction.Name);
+                command.Parameters.AddWithValue("@price", auction.Price);
+                command.Parameters.AddWithValue("@seller", auction.Seller);
 
+                command.ExecuteNonQuery(); 
+              //  SqlDataReader reader = command.ExecuteReader();
+                
+
+            }
+        }
+        private void UpdateCommand(string connectionString, Auction auction)
+        {
+            string queryString = "Update [Auction] set Buyer=@buyer,Status='Sold' where id=@id";
+            using (SqlConnection connection = new SqlConnection(
+                     connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@buyer", auction.Buyer);
+                command.Parameters.AddWithValue("@id", auction.Id);
+                command.ExecuteNonQuery();
             }
         }
 
@@ -82,6 +103,7 @@ namespace WebStore.Data
             return Data;
 
         }
+<<<<<<< HEAD
 
         public IEnumerable<Auction> GetAllSold(User user)
         {
@@ -96,6 +118,38 @@ namespace WebStore.Data
             List<Auction> Data = new List<Auction>();
             Data = SelectCommand(query, ConnectionString);
             return Data;
+=======
+        public void CreateAuction(Auction auction)
+        {
+            //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
+            CreateCommand(ConnectionString,auction);           
+        }
+        
+        public void UpdateAuction(Auction auction)
+        {
+            UpdateCommand(ConnectionString,auction);
+        }
+
+
+
+        public IEnumerable<Auction> GetAllSold()
+        {
+
+            string query = "Select * from [Auction]";
+            List<Auction> Data = new List<Auction>();
+            Data = SelectCommand(query, ConnectionString);
+            return Data;
+        }
+        public IEnumerable<Auction> GetAllBought()
+        {
+
+            string query = "Select * from [Auction]";
+            List<Auction> Data = new List<Auction>();
+            Data = SelectCommand(query, ConnectionString);
+            return Data;
+
+
+>>>>>>> 42a7e9402df2ea8243ae526aa8b8b13a6eff46d3
         }
     }
 }

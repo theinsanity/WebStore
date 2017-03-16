@@ -12,17 +12,19 @@
      
         @foreach (var auction in Model.Auctions)
         {
-        <div>
-          id:@auction.Id
-          name:@auction.Name
-          price:@auction.Price
-          seller:@auction.Seller
-          <button>Buy</button>
-        </div>
+          <form>
+        
+            id: @auction.Id
+            name:@auction.Name
+            price:@auction.Price
+            seller:@auction.Seller
+          <button> @Html.Action("Delete","Home",new { Id = auction.Id }) </button>
+        
+          </form>
         }
        <p>@Html.ActionLink("Create new auction", "Index","CreateAuction",null,new { @class = "btn btn-default" })</p>
     </div>
-    <button class="btn-danger">Butone</button>
+    
 </body>
 @Scripts.Render("~/bundles/bootstrap")
 </html>

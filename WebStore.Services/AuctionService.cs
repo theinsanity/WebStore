@@ -28,6 +28,25 @@ namespace WebStore.Services
             return auctionDtos;
 
         }
+        public void CreateAuction(AuctionDto auction)
+        {
+            Auction act = new Auction();
+            act.Name = auction.Name;
+            act.Price = auction.Price;
+            act.Seller = auction.Seller;
+           _auctionRepository.CreateAuction(act);
+        }
+        public void UpdateAuction (AuctionDto auction)
+        {
+            Auction act = new Auction();
+            act.Id = auction.Id;
+            act.Buyer = auction.Buyer;
+            _auctionRepository.UpdateAuction(act);
+
+
+        }
+
+
         public IEnumerable<AuctionDto> GetAllSold(UserDto user)
         {
             var auctionDtos = new List<AuctionDto>();
