@@ -103,6 +103,22 @@ namespace WebStore.Data
             return Data;
 
         }
+<<<<<<< HEAD
+
+        public IEnumerable<Auction> GetAllSold(User user)
+        {
+            string query = "Select * from [Auction] where status = sold and seller = user.Seller ";
+            List<Auction> Data = new List<Auction>();
+            Data = SelectCommand(query, ConnectionString);
+            return Data;
+           }
+        public IEnumerable<Auction> GetAllBought(User user)
+        {
+            string query = "Select * from [Auction] where status = sold and buyer = user.Buyer";
+            List<Auction> Data = new List<Auction>();
+            Data = SelectCommand(query, ConnectionString);
+            return Data;
+=======
         public void CreateAuction(Auction auction)
         {
             //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
@@ -133,7 +149,7 @@ namespace WebStore.Data
             return Data;
 
 
+>>>>>>> 42a7e9402df2ea8243ae526aa8b8b13a6eff46d3
         }
-
     }
 }
