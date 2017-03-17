@@ -47,27 +47,36 @@ namespace WebStore.Services
         }
 
 
-        public IEnumerable<AuctionDto> GetAllSold(UserDto user)
+        public IEnumerable<AuctionDto> GetAllSold(AuctionDto act)
         {
+
+            Auction auct = new Auction();
+            auct.Seller = act.Seller;
+            auct.Status = "Sold";
+
+
             var auctionDtos = new List<AuctionDto>();
         
-            foreach (Auction auction in _auctionRepository.GetAllSold())
+            foreach (Auction auction in _auctionRepository.GetAllSold(auct))
             {
-                if (auction.Status == "Sold" && auction.Seller == user.UserName)
+                
                     auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Buyer=auction.Buyer});
             }
             return auctionDtos;
 
         }
 
-        public IEnumerable<AuctionDto> GetAllBought(UserDto user)
+        public IEnumerable<AuctionDto> GetAllBought(AuctionDto act)
         {
+            Auction auct = new Auction();
+            auct.Buyer = act.Seller;
+            auct.Status = "Sold";
+
             var auctionDtos = new List<AuctionDto>();
 
-            foreach (Auction auction in _auctionRepository.GetAllBought())
+            foreach (Auction auction in _auctionRepository.GetAllBought(auct))
             {
-                if (auction.Status == "Sold" && auction.Buyer == user.UserName)
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = auction.Seller });
+                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = auction.Seller });
             }
             return auctionDtos;
 

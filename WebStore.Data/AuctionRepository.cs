@@ -17,7 +17,7 @@ namespace WebStore.Data
 
 
 
-
+        //Maping
 
         public Auction MapTableEnityToObject(IDataRecord record)
         {
@@ -33,6 +33,10 @@ namespace WebStore.Data
             entity.Status = (string)record["Status"];
             return entity;
         }
+
+        //Select queries
+
+        //Select all 
 
         private List<Auction> SelectCommand(string queryString,
             string connectionString)
@@ -59,7 +63,105 @@ namespace WebStore.Data
                 return result;
             }
         }
-       
+
+        public IEnumerable<Auction> GetAllAuctions()
+        {
+            string query = "Select * from [Auction]";
+            List<Auction> Data = new List<Auction>();
+            Data = SelectCommand(query, ConnectionString);
+            return Data;
+
+        }
+
+        //Select all sold
+
+        private List<Auction> GetAllSoldCommand(string connectionString, Auction auction)
+        {
+            string queryString = "Select * from [Auction] where Status=@st and Seller= @sl";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@st", auction.Status);
+                command.Parameters.AddWithValue("@sl", auction.Seller);
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<Auction> result = new List<Auction>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        Auction act = new Auction();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
+
+
+        }
+
+
+
+        public IEnumerable<Auction> GetAllSold(Auction auction)
+        {
+            List<Auction> Data = new List<Auction>();
+            Data = GetAllSoldCommand(ConnectionString, auction);
+            return Data;
+        }
+
+        //Select all bought
+
+        private List<Auction> GetAllBoughtCommand(string connectionString, Auction auction)
+        {
+            string queryString = "Select * from [Auction] where Status=@st and Buyer= @sl";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@st", auction.Status);
+                command.Parameters.AddWithValue("@sl", auction.Buyer);
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<Auction> result = new List<Auction>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        Auction act = new Auction();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
+
+
+        }
+
+
+        public IEnumerable<Auction> GetAllBought(Auction auction)
+        {
+            List<Auction> Data = new List<Auction>();
+            Data = GetAllBoughtCommand(ConnectionString, auction);
+            return Data;
+        }
+
+        //Insert queries
+
         private void CreateCommand(
             string connectionString, Auction auction)
         {
@@ -81,6 +183,14 @@ namespace WebStore.Data
 
             }
         }
+
+        public void CreateAuction(Auction auction)
+        {
+            CreateCommand(ConnectionString, auction);
+        }
+
+        //Update queries
+
         private void UpdateCommand(string connectionString, Auction auction)
         {
             string queryString = "Update [Auction] set Buyer=@buyer,Status='Sold' where id=@id";
@@ -96,42 +206,11 @@ namespace WebStore.Data
             }
         }
 
-        public IEnumerable<Auction> GetAllAuctions()
+        public void UpdateAuction(Auction auction)
         {
-            string query = "Select * from [Auction]";
-            List<Auction> Data = new List<Auction>();
-            Data = SelectCommand(query, ConnectionString);
-            return Data;
-
+            UpdateCommand(ConnectionString, auction);
         }
 
-        //TODO : Fix this
-        public IEnumerable<Auction> GetAllSold(Auction user)
-        {
-            string query = "Select * from [Auction] where status = 'Sold' and seller = user.Seller ";
-            List<Auction> Data = new List<Auction>();
-            Data = SelectCommand(query, ConnectionString);
-            return Data;
-        }
-        //TODO : Fix this
-        public IEnumerable<Auction> GetAllBought(Auction user)
-        {
-            string query = "Select * from [Auction] where status = sold and buyer = user.Buyer";
-            List<Auction> Data = new List<Auction>();
-            Data = SelectCommand(query, ConnectionString);
-            return Data;
-        }
-            public void CreateAuction(Auction auction)
-            {
-                //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
-                CreateCommand(ConnectionString, auction);
-            }
 
-            public void UpdateAuction(Auction auction)
-            {
-                UpdateCommand(ConnectionString, auction);
-            }
-           
-        
     }
 }
