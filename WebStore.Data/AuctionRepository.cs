@@ -15,12 +15,12 @@ namespace WebStore.Data
     {
         private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
 
-        
+
 
 
 
         public Auction MapTableEnityToObject(IDataRecord record)
-        { 
+        {
             Auction entity = new Auction();
             entity.Id = (int)record["Id"];
             entity.Name = (string)record["Name"];
@@ -28,13 +28,13 @@ namespace WebStore.Data
             entity.Seller = (string)record["Seller"];
             if (record["Buyer"] == DBNull.Value)
                 entity.Buyer = string.Empty;
-            else 
+            else
                 entity.Buyer = (string)record["Buyer"];
             entity.Status = (string)record["Status"];
             return entity;
         }
 
-        private  List<Auction> SelectCommand(string queryString,
+        private List<Auction> SelectCommand(string queryString,
             string connectionString)
         {
             using (SqlConnection connection = new SqlConnection(
@@ -59,8 +59,9 @@ namespace WebStore.Data
                 return result;
             }
         }
+       
         private void CreateCommand(
-            string connectionString,Auction auction)
+            string connectionString, Auction auction)
         {
             string queryString = "Insert into [Auction] (Name, Price, Buyer, Seller, Status) values(@name,@price,null,@seller,'Pending')";
 
@@ -74,9 +75,9 @@ namespace WebStore.Data
                 command.Parameters.AddWithValue("@price", auction.Price);
                 command.Parameters.AddWithValue("@seller", auction.Seller);
 
-                command.ExecuteNonQuery(); 
-              //  SqlDataReader reader = command.ExecuteReader();
-                
+                command.ExecuteNonQuery();
+                //  SqlDataReader reader = command.ExecuteReader();
+
 
             }
         }
@@ -103,53 +104,34 @@ namespace WebStore.Data
             return Data;
 
         }
-<<<<<<< HEAD
 
-        public IEnumerable<Auction> GetAllSold(User user)
+        //TODO : Fix this
+        public IEnumerable<Auction> GetAllSold(Auction user)
         {
-            string query = "Select * from [Auction] where status = sold and seller = user.Seller ";
+            string query = "Select * from [Auction] where status = 'Sold' and seller = user.Seller ";
             List<Auction> Data = new List<Auction>();
             Data = SelectCommand(query, ConnectionString);
             return Data;
-           }
-        public IEnumerable<Auction> GetAllBought(User user)
+        }
+        //TODO : Fix this
+        public IEnumerable<Auction> GetAllBought(Auction user)
         {
             string query = "Select * from [Auction] where status = sold and buyer = user.Buyer";
             List<Auction> Data = new List<Auction>();
             Data = SelectCommand(query, ConnectionString);
             return Data;
-=======
-        public void CreateAuction(Auction auction)
-        {
-            //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
-            CreateCommand(ConnectionString,auction);           
         }
+            public void CreateAuction(Auction auction)
+            {
+                //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
+                CreateCommand(ConnectionString, auction);
+            }
+
+            public void UpdateAuction(Auction auction)
+            {
+                UpdateCommand(ConnectionString, auction);
+            }
+           
         
-        public void UpdateAuction(Auction auction)
-        {
-            UpdateCommand(ConnectionString,auction);
-        }
-
-
-
-        public IEnumerable<Auction> GetAllSold()
-        {
-
-            string query = "Select * from [Auction]";
-            List<Auction> Data = new List<Auction>();
-            Data = SelectCommand(query, ConnectionString);
-            return Data;
-        }
-        public IEnumerable<Auction> GetAllBought()
-        {
-
-            string query = "Select * from [Auction]";
-            List<Auction> Data = new List<Auction>();
-            Data = SelectCommand(query, ConnectionString);
-            return Data;
-
-
->>>>>>> 42a7e9402df2ea8243ae526aa8b8b13a6eff46d3
-        }
     }
 }

@@ -12,7 +12,7 @@ namespace WebStore.Data.Contracts.RepositoryInterface
         IEnumerable<Auction> GetAllAuctions();
         void CreateAuction(Auction auction);
         void UpdateAuction(Auction auction);
-        IEnumerable<Auction> GetAllSold();
-        IEnumerable<Auction> GetAllBought();
+        IEnumerable<Auction> GetAllSold(Auction auction);
+        IEnumerable<Auction> GetAllBought(Auction auction);
     }
 }
