@@ -13,11 +13,7 @@ namespace WebStore.Data
 {
     public class AuctionRepository : IAuctionRepository
     {
-        private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
-
-        
-
-
+        private string ConnectionString = "Data Source=DESKTOP-UTLDQK4\\SHIRO;Initial Catalog=Repository;Integrated Security=True";
 
         public Auction MapTableEnityToObject(IDataRecord record)
         { 
@@ -103,7 +99,7 @@ namespace WebStore.Data
             return Data;
 
         }
-<<<<<<< HEAD
+
 
         public IEnumerable<Auction> GetAllSold(User user)
         {
@@ -118,7 +114,7 @@ namespace WebStore.Data
             List<Auction> Data = new List<Auction>();
             Data = SelectCommand(query, ConnectionString);
             return Data;
-=======
+        }
         public void CreateAuction(Auction auction)
         {
             //string query = "Insert into [Auction] (id,name,price,buyer,seller,status) values(21,"+ auction.Name +","+auction.Price+",null,"+auction.Seller+",'Pending'";
@@ -147,9 +143,6 @@ namespace WebStore.Data
             List<Auction> Data = new List<Auction>();
             Data = SelectCommand(query, ConnectionString);
             return Data;
-
-
->>>>>>> 42a7e9402df2ea8243ae526aa8b8b13a6eff46d3
         }
     }
 }

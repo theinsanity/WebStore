@@ -12,7 +12,7 @@ namespace WebStore.Data
 {
     public class UserRepository : IUserRepository
     {
-        private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
+        private string connectionString = "Data Source=desktop-utldqk4\\shiro;Initial Catalog=Repository;Integrated Security=True";
 
         public User MapTableEnityToObject(IDataRecord record)
         {
@@ -49,19 +49,144 @@ namespace WebStore.Data
                     }
 
                 }
+               
                 return result;
             }
         }
+        private List<User> GetUserEmailCommand(string connectionString, User user)
+        {
+            string queryString = "Select * from [User] where Email=@usremail";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@usremail", user.Email);
+                
 
 
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<User> result = new List<User>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        User act = new User();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
+
+
+        }
+
+        private List<User> GetUserUsernameCommand(string connectionString, User user)
+        {
+            string queryString = "Select * from [User] where UserName=@usrusername";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@usrusername", user.UserName);
+
+
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                List<User> result = new List<User>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        User act = new User();
+                        act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result;
+            }
+
+
+        }
+
+
+        public bool CheckUserEmail(User user)
+        {
+            List<User> Data = new List<User>();
+            Data = GetUserEmailCommand(connectionString, user);
+
+            if (Data.Count() == 1) /* exists in db, return false */
+                return false;
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool CheckUserUsername(User user)
+        {
+            List<User> Data = new List<User>();
+            Data = GetUserUsernameCommand(connectionString, user);
+
+            if (Data.Count() == 1) /* exists in db, return false */
+                return false;
+            else
+            {
+                return true;
+            }
+        }
 
         public IEnumerable<User> GetAllUsers()
         {
             string query = "Select * from [User]";
             List<User> Data = new List<User>();
-            Data = CreateCommand(query, ConnectionString);
+            Data = CreateCommand(query, connectionString);
             return Data;
 
         }
+       
+       
+
+    private void CreateCommand(
+            string connectionString, User user)
+        {
+            string queryString = "Insert into [User](UserName, Email, Password, Credit) values(@username, @email, @password, 0)";
+
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@username", user.UserName);
+                command.Parameters.AddWithValue("@email", user.Email);
+                command.Parameters.AddWithValue("@password", user.Password);
+                
+
+                command.ExecuteNonQuery();
+                connection.Close();
+                //  SqlDataReader reader = command.ExecuteReader();
+
+
+            }
+        }
+
+
+
+        public void CreateUser(User user)
+        {
+           CreateCommand(connectionString, user);
+        }
+
     }
 }

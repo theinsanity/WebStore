@@ -7,7 +7,6 @@ using WebStore.Data.Contracts.Models;
 using WebStore.Data.Contracts.RepositoryInterface;
 using WebStore.Services.Contracts.Dto;
 using WebStore.Services.Contracts.ServiceInterface;
-
 namespace WebStore.Services
 {
     public class UserService : IUserService
@@ -29,25 +28,39 @@ namespace WebStore.Services
 
 
         }
-        public string CheckUser(UserDto _user)
+        public bool CheckUserEmail(UserDto user)
         {
+                User usr = new User();
+                usr.UserName = user.UserName;
+                usr.Email = user.Email;
+                usr.Password = user.Password;
+                usr.Credit = user.Credit;
 
-            var userDtos = new List<UserDto>();
-            foreach (User user in _userRepository.GetAllUsers())
-            {
-                if (_user.Email == user.Email)
-                {
-                    return "Email already exists!";
-                }
-                if (_user.UserName == user.UserName)
-                {
-                    return "Username already exists!";
-                }
-            }
-            return "Success";
+                bool var = _userRepository.CheckUserEmail(usr);
+                return var;
         }
+        
+       public bool CheckUserUsername(UserDto user)
+        {
+            User usr = new User();
+            usr.UserName = user.UserName;
+            usr.Email = user.Email;
+            usr.Password = user.Password;
+            usr.Credit = user.Credit;
 
-
+            bool var = _userRepository.CheckUserUsername(usr);
+            return var;
+           
+        }
+        public void CreateUser(UserDto user)
+        {
+            User usr = new User();
+            usr.UserName = user.UserName;
+            usr.Email = user.Email;
+            usr.Password = user.Password;
+            usr.Credit = user.Credit;
+            _userRepository.CreateUser(usr);
+        }
 
     }
 }
