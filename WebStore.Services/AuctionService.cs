@@ -23,7 +23,11 @@ namespace WebStore.Services
             foreach (Auction auction in _auctionRepository.GetAllAuctions())
             {
                 if (auction.Status == "Pending")
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = auction.Seller });
+                {
+                    
+                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price,Seller = new UserDto {UserName = auction.Seller.UserName } });
+                }
+                    
             }
             return auctionDtos;
 
@@ -33,14 +37,15 @@ namespace WebStore.Services
             Auction act = new Auction();
             act.Name = auction.Name;
             act.Price = auction.Price;
-            act.Seller = auction.Seller;
+            act.Seller = new User();
+            act.Seller.UserName = auction.Seller.UserName;
            _auctionRepository.CreateAuction(act);
         }
         public void UpdateAuction (AuctionDto auction)
         {
             Auction act = new Auction();
             act.Id = auction.Id;
-            act.Buyer = auction.Buyer;
+            act.Buyer.UserName = auction.Buyer.UserName;
             _auctionRepository.UpdateAuction(act);
 
 
@@ -51,7 +56,8 @@ namespace WebStore.Services
         {
 
             Auction auct = new Auction();
-            auct.Seller = act.Seller;
+            auct.Seller = new User();
+            auct.Seller.UserName = act.Seller.UserName;
             auct.Status = "Sold";
 
 
@@ -60,7 +66,7 @@ namespace WebStore.Services
             foreach (Auction auction in _auctionRepository.GetAllSold(auct))
             {
                 
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Buyer=auction.Buyer});
+                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Buyer = new UserDto { UserName = auction.Buyer.UserName } });
             }
             return auctionDtos;
 
@@ -69,14 +75,15 @@ namespace WebStore.Services
         public IEnumerable<AuctionDto> GetAllBought(AuctionDto act)
         {
             Auction auct = new Auction();
-            auct.Buyer = act.Seller;
+            auct.Buyer = new User();
+            auct.Buyer.UserName = act.Seller.UserName;
             auct.Status = "Sold";
 
             var auctionDtos = new List<AuctionDto>();
 
             foreach (Auction auction in _auctionRepository.GetAllBought(auct))
             {
-                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = auction.Seller });
+                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = new UserDto {UserName = auction.Seller.UserName } });
             }
             return auctionDtos;
 

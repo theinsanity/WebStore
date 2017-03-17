@@ -23,7 +23,8 @@ namespace WebStore.Web.Controllers
         public ActionResult Index()
         {
             AuctionDto act = new AuctionDto();
-            act.Seller = "Pera";
+            act.Seller = new UserDto();
+            act.Seller.UserName = "Pera";
 
             var auctionsSold = _auctionService.GetAllSold(act);
             var auctionsBought = _auctionService.GetAllBought(act);

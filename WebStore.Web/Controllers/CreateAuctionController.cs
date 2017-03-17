@@ -26,7 +26,8 @@ namespace WebStore.Web.Controllers
                 AuctionDto auction = new AuctionDto();
                 auction.Name = newAuction.Name;
                 auction.Price = newAuction.Price;
-                auction.Seller = "Prodavac101";
+                auction.Seller = new UserDto();
+                auction.Seller.UserName = "Marko";
                 try
                 {
                     _auctionService.CreateAuction(auction);

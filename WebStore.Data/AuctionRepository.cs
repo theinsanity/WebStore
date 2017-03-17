@@ -25,11 +25,13 @@ namespace WebStore.Data
             entity.Id = (int)record["Id"];
             entity.Name = (string)record["Name"];
             entity.Price = (double)record["Price"];
-            entity.Seller = (string)record["Seller"];
+            entity.Seller = new User();
+            entity.Seller.UserName = (string)record["Seller"];
+            entity.Buyer = new User();
             if (record["Buyer"] == DBNull.Value)
-                entity.Buyer = string.Empty;
+                entity.Buyer = null;
             else
-                entity.Buyer = (string)record["Buyer"];
+                entity.Buyer.UserName = (string)record["Buyer"];
             entity.Status = (string)record["Status"];
             return entity;
         }
@@ -85,7 +87,7 @@ namespace WebStore.Data
 
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@st", auction.Status);
-                command.Parameters.AddWithValue("@sl", auction.Seller);
+                command.Parameters.AddWithValue("@sl", auction.Seller.UserName);
 
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -129,7 +131,7 @@ namespace WebStore.Data
 
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@st", auction.Status);
-                command.Parameters.AddWithValue("@sl", auction.Buyer);
+                command.Parameters.AddWithValue("@sl", auction.Buyer.UserName);
 
 
                 SqlDataReader reader = command.ExecuteReader();
@@ -175,10 +177,10 @@ namespace WebStore.Data
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@name", auction.Name);
                 command.Parameters.AddWithValue("@price", auction.Price);
-                command.Parameters.AddWithValue("@seller", auction.Seller);
+                command.Parameters.AddWithValue("@seller", auction.Seller.UserName);
 
                 command.ExecuteNonQuery();
-                //  SqlDataReader reader = command.ExecuteReader();
+               
 
 
             }
@@ -200,7 +202,7 @@ namespace WebStore.Data
                 connection.Open();
 
                 SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@buyer", auction.Buyer);
+                command.Parameters.AddWithValue("@buyer", auction.Buyer.UserName);
                 command.Parameters.AddWithValue("@id", auction.Id);
                 command.ExecuteNonQuery();
             }
