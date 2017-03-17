@@ -32,16 +32,17 @@ namespace WebStore.Web.Controllers
             return RedirectToAction("Index", "CreateAuction");
         }
 
-       
-        public ActionResult Delete(AuctionViewModel wm)
+       /*
+        public ActionResult Buy(AuctionViewModel wm)
         {
             AuctionDto auction = new AuctionDto();
-            auction.Buyer = "Pera";
+            auction.Buyer.UserName = "Pera";
             auction.Id = wm.Id;
             _auctionService.UpdateAuction(auction);
 
             return Content("Buy");
         }
+        */
 
     }
 }

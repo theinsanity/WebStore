@@ -8,23 +8,23 @@
     <title>Index</title>
 </head>
 <body>
-    <div>
+    
      
+    <table style="width:100%;border:1px solid black;border-collapse:collapse">
         @foreach (var auction in Model.Auctions)
         {
-          <form>
-        
-            id: @auction.Id
-            name:@auction.Name
-            price:@auction.Price
-            seller:@auction.Seller
-          <button> @Html.Action("Delete","Home",new { Id = auction.Id }) </button>
-        
-          </form>
+            <tr style="border:1px solid black;">
+                <td style="border:1px solid black;">@auction.Id</td>
+                <td style="border:1px solid black;">@auction.Name</td>
+                <td style="border:1px solid black;">@auction.Price</td>
+                <td style="border:1px solid black;">@auction.Seller.UserName</td>
+            </tr>
+
         }
-       <p>@Html.ActionLink("Create new auction", "Index","CreateAuction",null,new { @class = "btn btn-default" })</p>
-    </div>
-    
+
+        <p>@Html.ActionLink("Create new auction", "Index", "CreateAuction", null, new { @class = "btn btn-default" })</p>
+
+
 </body>
-@Scripts.Render("~/bundles/bootstrap")
+
 </html>

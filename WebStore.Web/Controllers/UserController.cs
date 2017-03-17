@@ -22,10 +22,12 @@ namespace WebStore.Web.Controllers
         }
         public ActionResult Index()
         {
-            UserDto user = new UserDto();
-            user.UserName = "Pera";
-            var auctionsSold = _auctionService.GetAllSold(user);
-            var auctionsBought = _auctionService.GetAllBought(user);
+            AuctionDto act = new AuctionDto();
+            act.Seller = new UserDto();
+            act.Seller.UserName = "Pera";
+
+            var auctionsSold = _auctionService.GetAllSold(act);
+            var auctionsBought = _auctionService.GetAllBought(act);
             return View(new AuctionViewModel {AuctionsBought = auctionsBought, AuctionsSold = auctionsSold });
         }
     }

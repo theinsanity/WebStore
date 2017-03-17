@@ -7,7 +7,7 @@ using WebStore.Data.Contracts.Models;
 
 namespace WebStore.Data.Contracts.RepositoryInterface
 {
-   public interface IUserRepository
+    public interface IUserRepository
     {
          
         IEnumerable<User> GetAllUsers();
