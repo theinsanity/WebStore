@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,9 @@ namespace WebStore.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            DependencyResolver.SetResolver(DependencyResolverProvider.GetDependencyResolver());
+            DependencyResolver.SetResolver(
+                 new DependencyResolverProvider(ConfigurationManager.AppSettings["ConnectionString"])
+                     .GetDependencyResolver());
         }
     }
 }

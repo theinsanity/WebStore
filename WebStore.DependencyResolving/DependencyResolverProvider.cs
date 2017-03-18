@@ -15,8 +15,15 @@ namespace WebStore.DependencyResolving
 {
     public class DependencyResolverProvider
     {
-        private static Container _container;
-        public static IDependencyResolver GetDependencyResolver()
+        private Container _container;
+        private readonly string _connectionString;
+
+        public DependencyResolverProvider(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
+        public  IDependencyResolver GetDependencyResolver()
         {
             if (_container == null)
             {
@@ -24,7 +31,7 @@ namespace WebStore.DependencyResolving
             }
             return new SimpleInjectorDependencyResolver(_container);
         }
-        private static void SetupDependencyResolver()
+        private  void SetupDependencyResolver()
         {
             _container = new Container();
           
@@ -34,11 +41,12 @@ namespace WebStore.DependencyResolving
             _container.Verify();
         }
         
-        private static void RegisterRepositoryDependencyInjection()
+        private void RegisterRepositoryDependencyInjection()
         {
+            _container.Register<IAuctionRepository>(() => new AuctionRepository(_connectionString));
             _container.Register<IUserRepository, UserRepository>(Lifestyle.Transient);
             _container.Register<IUserService, UserService>(Lifestyle.Transient);
-            _container.Register<IAuctionRepository, AuctionRepository>(Lifestyle.Transient);
+            
             _container.Register<IAuctionService, AuctionService>(Lifestyle.Transient);
         }
        

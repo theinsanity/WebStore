@@ -1,15 +1,21 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    
+
     <title>Auction</title>
-   
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+
 </head>
 <body>
 
-        @RenderBody()
-        
-        
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

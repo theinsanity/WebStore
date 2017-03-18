@@ -1,30 +1,22 @@
 ﻿@model WebStore.Web.Models.AuctionViewModel
+@{ 
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
     
+}
+
      
-    <table style="width:100%;border:1px solid black;border-collapse:collapse">
+    <table class="table table-bordered">
         @foreach (var auction in Model.Auctions)
         {
-            <tr style="border:1px solid black;">
-                <td style="border:1px solid black;">@auction.Id</td>
-                <td style="border:1px solid black;">@auction.Name</td>
-                <td style="border:1px solid black;">@auction.Price</td>
-                <td style="border:1px solid black;">@auction.Seller.UserName</td>
+            <tr>
+                <td>@auction.Id</td>
+                <td >@auction.Name</td>
+                <td>@auction.Price</td>
+                <td >@auction.Seller.UserName</td>
+                <td><button class="btn-danger"></button></td>
             </tr>
-
+            
         }
-
+     </table>
         <p>@Html.ActionLink("Create new auction", "Index", "CreateAuction", null, new { @class = "btn btn-default" })</p>
 
-
-</body>
-
-</html>

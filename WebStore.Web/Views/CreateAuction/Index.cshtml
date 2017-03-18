@@ -1,16 +1,5 @@
 ﻿@model WebStore.Web.Models.CreateAuctionViewModel
-@{
-    Layout = null;
-}
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
     @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
     {
     <form method="post">
@@ -26,5 +15,3 @@
         <input type="submit" value="Submit" />
     </form>
     }
-</body>
-</html>
