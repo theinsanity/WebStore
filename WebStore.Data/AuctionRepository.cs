@@ -15,6 +15,7 @@ namespace WebStore.Data
     {
 
 
+
         private readonly string _connectionString;
 
         public AuctionRepository(string connectionString)

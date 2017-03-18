@@ -12,7 +12,14 @@ namespace WebStore.Data
 {
     public class UserRepository : IUserRepository
     {
-        private string connectionString = "Data Source=desktop-utldqk4\\shiro;Initial Catalog=Repository;Integrated Security=True";
+        //private string connectionString = "Data Source=desktop-utldqk4\\shiro;Initial Catalog=Repository;Integrated Security=True";
+        private readonly string _connectionString;
+
+        public UserRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
 
         public User MapTableEnityToObject(IDataRecord record)
         {
@@ -123,7 +130,7 @@ namespace WebStore.Data
         public bool CheckUserEmail(User user)
         {
             List<User> Data = new List<User>();
-            Data = GetUserEmailCommand(connectionString, user);
+            Data = GetUserEmailCommand(_connectionString, user);
 
             if (Data.Count() == 1) /* exists in db, return false */
                 return false;
@@ -136,7 +143,7 @@ namespace WebStore.Data
         public bool CheckUserUsername(User user)
         {
             List<User> Data = new List<User>();
-            Data = GetUserUsernameCommand(connectionString, user);
+            Data = GetUserUsernameCommand(_connectionString, user);
 
             if (Data.Count() == 1) /* exists in db, return false */
                 return false;
@@ -150,7 +157,7 @@ namespace WebStore.Data
         {
             string query = "Select * from [User]";
             List<User> Data = new List<User>();
-            Data = CreateCommand(query, connectionString);
+            Data = CreateCommand(query, _connectionString);
             return Data;
 
         }
@@ -185,7 +192,7 @@ namespace WebStore.Data
 
         public void CreateUser(User user)
         {
-           CreateCommand(connectionString, user);
+           CreateCommand(_connectionString, user);
         }
 
     }
