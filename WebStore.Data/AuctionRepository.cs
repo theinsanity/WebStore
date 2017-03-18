@@ -13,7 +13,7 @@ namespace WebStore.Data
 {
     public class AuctionRepository : IAuctionRepository
     {
-        //private string ConnectionString = "Data Source=ALUCARD;Initial Catalog=Repository;Integrated Security=True";
+
 
         private readonly string _connectionString;
 
@@ -187,7 +187,7 @@ namespace WebStore.Data
                 command.Parameters.AddWithValue("@seller", auction.Seller.UserName);
 
                 command.ExecuteNonQuery();
-               
+
 
 
             }

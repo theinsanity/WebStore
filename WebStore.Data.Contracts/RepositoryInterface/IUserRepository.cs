@@ -7,9 +7,12 @@ using WebStore.Data.Contracts.Models;
 
 namespace WebStore.Data.Contracts.RepositoryInterface
 {
-   public interface IUserRepository
+    public interface IUserRepository
     {
          
         IEnumerable<User> GetAllUsers();
+        void CreateUser(User user);
+        bool CheckUserEmail(User user);
+        bool CheckUserUsername(User user);
     }
 }

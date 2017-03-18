@@ -1,11 +1,8 @@
 ﻿@model WebStore.Web.Models.AuctionViewModel
-@{ 
 
-    
-}
-
-     
-    <table class="table table-bordered">
+<div class="container">
+ <h1> All auctions</h1>     
+    <table class="table table-hover">
         @foreach (var auction in Model.Auctions)
         {
             <tr>
@@ -13,10 +10,11 @@
                 <td >@auction.Name</td>
                 <td>@auction.Price</td>
                 <td >@auction.Seller.UserName</td>
-                <td><button class="btn-danger"></button></td>
+                
             </tr>
             
         }
      </table>
+    </div>
         <p>@Html.ActionLink("Create new auction", "Index", "CreateAuction", null, new { @class = "btn btn-default" })</p>
 
