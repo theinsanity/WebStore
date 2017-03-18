@@ -14,6 +14,8 @@ namespace WebStore.Data
     public class AuctionRepository : IAuctionRepository
     {
 
+    
+
 
 
         private readonly string _connectionString;

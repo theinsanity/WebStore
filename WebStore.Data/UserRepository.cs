@@ -12,6 +12,7 @@ namespace WebStore.Data
 {
     public class UserRepository : IUserRepository
     {
+
         //private string connectionString = "Data Source=desktop-utldqk4\\shiro;Initial Catalog=Repository;Integrated Security=True";
         private readonly string _connectionString;
 
@@ -19,6 +20,7 @@ namespace WebStore.Data
         {
             _connectionString = connectionString;
         }
+
 
 
         public User MapTableEnityToObject(IDataRecord record)
@@ -57,6 +59,7 @@ namespace WebStore.Data
 
                 }
                
+
                 return result;
             }
         }
@@ -120,11 +123,15 @@ namespace WebStore.Data
                     }
 
                 }
+
                 return result;
             }
 
 
         }
+       
+
+       
 
 
         public bool CheckUserEmail(User user)
@@ -145,6 +152,8 @@ namespace WebStore.Data
             List<User> Data = new List<User>();
             Data = GetUserUsernameCommand(_connectionString, user);
 
+
+
             if (Data.Count() == 1) /* exists in db, return false */
                 return false;
             else
@@ -157,7 +166,9 @@ namespace WebStore.Data
         {
             string query = "Select * from [User]";
             List<User> Data = new List<User>();
+
             Data = CreateCommand(query, _connectionString);
+
             return Data;
 
         }
@@ -192,7 +203,9 @@ namespace WebStore.Data
 
         public void CreateUser(User user)
         {
+
            CreateCommand(_connectionString, user);
+
         }
 
     }
