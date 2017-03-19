@@ -4,14 +4,17 @@
     {
     <form method="post">
 
+       
         <div>
-            <p>@Html.TextBoxFor(m => m.Name) Item Name</p>
+            <label>Item Name:</label>
+            <p>@Html.TextBoxFor(m => m.Name)</p>
         </div>
 
         <div>
-            <p>@Html.TextBoxFor(m => m.Price) Price</p>
+            <label>Price:</label>
+            <p>@Html.TextBoxFor(m => m.Price)</p>
         </div>
 
-        <input type="submit" value="Submit" />
+        <input type="submit" class="btn btn-default" value="Submit" />
     </form>
     }

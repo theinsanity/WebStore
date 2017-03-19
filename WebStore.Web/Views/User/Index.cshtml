@@ -17,37 +17,40 @@
     
     
     </div>
-    
-    
-    
-    
-    
-    
-    
+
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
     <p>Sold Items</p>
-    <table style="width:100%;border:1px solid black;border-collapse:collapse;">
+    <table class="table table-hover">
         @foreach (var auction1 in Model.AuctionsSold)
         {
-            <tr style="border:1px solid black;">
-                <td style="border:1px solid black;">@auction1.Id</td>
-                <td style="border:1px solid black;">@auction1.Name</td>
-                <td style="border:1px solid black;">@auction1.Price</td>
-                <td style="border:1px solid black;">@auction1.Buyer.UserName</td>
+            <tr>
+                <td>@auction1.Id</td>
+                <td>@auction1.Name</td>
+                <td>@auction1.Price</td>
+                <td>@auction1.Buyer.UserName</td>
             </tr>
                
         }
     </table> 
+            </div>
+        <div class="col-md-6">
     <p>Bought Items</p>
-    <table style="width:100%;border:1px solid black;border-collapse:collapse">
+    <table class="table table-hover">
         @foreach (var auction1 in Model.AuctionsBought)
         {
-            <tr style="border:1px solid black;">
-                <td style="border:1px solid black;">@auction1.Id</td>
-                <td style="border:1px solid black;">@auction1.Name</td>
-                <td style="border:1px solid black;">@auction1.Price</td>
-                <td style="border:1px solid black;">@auction1.Seller.UserName</td>
+            <tr>
+                <td>@auction1.Id</td>
+                <td>@auction1.Name</td>
+                <td>@auction1.Price</td>
+                <td>@auction1.Seller.UserName</td>
             </tr>
 
         }
+        </table>
+            </div>
+        </div>
+        </div>
 </body>
 </html>

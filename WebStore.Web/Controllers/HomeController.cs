@@ -24,7 +24,10 @@ namespace WebStore.Web.Controllers
         {
             
             var auctions = _auctionService.GetAllAuctions();
-            return View(new AuctionViewModel { Auctions = auctions });
+            var user = new UserDto();
+            user.UserName = "Pera";
+            user.Credit = 10000;
+            return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit });
         }
         
         public ActionResult CreateAuction()
@@ -33,14 +36,14 @@ namespace WebStore.Web.Controllers
         }
 
        /*
-        public ActionResult Buy(AuctionViewModel wm)
+        public ActionResult Buy()
         {
             AuctionDto auction = new AuctionDto();
             auction.Buyer.UserName = "Pera";
-            auction.Id = wm.Id;
+            auction.Id =  Convert.ToInt32(Request["id"]);
             _auctionService.UpdateAuction(auction);
 
-            return Content("Buy");
+            return Content(auction.Id.ToString());
         }
         */
 
