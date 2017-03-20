@@ -154,6 +154,7 @@
     <Compile Include="Models\CreateAccountViewModel.cs" />
     <Compile Include="Models\CreateAuctionViewModel.cs" />
     <Compile Include="Models\CreditViewModel.cs" />
+    <Compile Include="Models\ItemsViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +210,7 @@
     <Content Include="Views\CreateAccount\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Credit\Index.cshtml" />
+    <Content Include="Views\Home\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

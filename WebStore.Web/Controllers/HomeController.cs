@@ -82,7 +82,16 @@ namespace WebStore.Web.Controllers
                 return Content("Not enough credit");
             }
         }
-    
+       public ActionResult Details (int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var auction = _auctionService.FindAuction(id.Value);
+            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller=auction.Seller});
+        }
 
     }
 }
