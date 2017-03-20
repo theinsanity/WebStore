@@ -9,5 +9,7 @@ namespace WebStore.Web.Models
     public class UsersViewModel
     {
        public IEnumerable<UserDto> Users { get; set; }
+       public string UserName { get; set; }
+       public double Credit { get; set; }
     }
 }

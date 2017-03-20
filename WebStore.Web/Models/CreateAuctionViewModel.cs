@@ -13,6 +13,8 @@ namespace WebStore.Web.Models
         public string Name { get; set; }
         [Required]
         public double Price { get; set; }
+        public string UserName { get; set; }
+        public double Credit { get; set; }
 
     }
 }

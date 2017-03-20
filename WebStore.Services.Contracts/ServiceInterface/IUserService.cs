@@ -14,5 +14,6 @@ namespace WebStore.Services.Contracts.ServiceInterface
         bool CheckUserUsername(UserDto user);
         void CreateUser(UserDto user);
         bool LoginValidation(UserDto user);
+        double GetUserCredit(UserDto user);
     }
 }

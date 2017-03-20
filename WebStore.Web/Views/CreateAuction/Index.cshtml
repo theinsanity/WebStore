@@ -1,6 +1,9 @@
 ﻿@model WebStore.Web.Models.CreateAuctionViewModel
 
-   
+   <div class="row">
+    <div align="left" class="col-md-6">@Html.ActionLink(Model.UserName, "Index", "User")</div>
+    <div class="col-md-6" align="right">@Html.ActionLink(Model.Credit.ToString(), "Index", "Credit")</div>
+</div>
 
 
     @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))

@@ -68,6 +68,12 @@ namespace WebStore.Services
             usr.Password = user.Password;
             return _userRepository.LoginValidation(usr);
         }
+        public double GetUserCredit(UserDto user)
+        {
+            var usr = new User();
+            usr.UserName = user.UserName;
+            return _userRepository.GetUserCredit(usr);
+        }
 
     }
 }

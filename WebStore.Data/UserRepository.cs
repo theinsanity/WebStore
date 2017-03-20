@@ -229,6 +229,31 @@ namespace WebStore.Data
                     return false;
             }
         }
+    public double GetUserCredit(User user)
+    {
+        string queryString = "Select * from [User] where UserName=@usrusername";
+        using (var connection = new SqlConnection(
+                  _connectionString))
+        {
+            connection.Open();
 
+            var command = new SqlCommand(queryString, connection);
+            command.Parameters.AddWithValue("@usrusername", user.UserName);
+                var reader = command.ExecuteReader();
+                var result = new List<User>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        var act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+                return result[0].Credit;
+           
+        }
     }
+}
 }
