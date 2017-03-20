@@ -24,11 +24,11 @@ namespace WebStore.Web.Controllers
         {
             AuctionDto act = new AuctionDto();
             act.Seller = new UserDto();
-            act.Seller.UserName = "Pera";
+            act.Seller.UserName =Session["UserName"].ToString();
 
             var auctionsSold = _auctionService.GetAllSold(act);
             var auctionsBought = _auctionService.GetAllBought(act);
-            return View(new AuctionViewModel {AuctionsBought = auctionsBought, AuctionsSold = auctionsSold });
+            return View(new AuctionViewModel {AuctionsBought = auctionsBought, AuctionsSold = auctionsSold, UserName = act.Seller.UserName,Credit=1000 });
         }
     }
 }

@@ -13,5 +13,6 @@ namespace WebStore.Services.Contracts.ServiceInterface
         bool CheckUserEmail(UserDto user); 
         bool CheckUserUsername(UserDto user);
         void CreateUser(UserDto user);
+        bool LoginValidation(UserDto user);
     }
 }

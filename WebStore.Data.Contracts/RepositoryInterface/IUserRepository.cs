@@ -14,5 +14,6 @@ namespace WebStore.Data.Contracts.RepositoryInterface
         void CreateUser(User user);
         bool CheckUserEmail(User user);
         bool CheckUserUsername(User user);
+        bool LoginValidation(User user);
     }
 }

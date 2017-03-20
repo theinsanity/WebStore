@@ -25,7 +25,7 @@ namespace WebStore.Web.Controllers
             
             var auctions = _auctionService.GetAllAuctions();
             var user = new UserDto();
-            user.UserName = "Pera";
+            user.UserName = Session["UserName"].ToString();
             user.Credit = 10000;
             return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit });
         }

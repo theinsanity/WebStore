@@ -153,6 +153,7 @@
     <Compile Include="Models\AuctionViewModel.cs" />
     <Compile Include="Models\CreateAccountViewModel.cs" />
     <Compile Include="Models\CreateAuctionViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\UsersViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
