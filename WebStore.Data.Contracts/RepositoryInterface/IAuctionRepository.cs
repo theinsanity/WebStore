@@ -14,5 +14,6 @@ namespace WebStore.Data.Contracts.RepositoryInterface
         void UpdateAuction(Auction auction);
         IEnumerable<Auction> GetAllSold(Auction auction);
         IEnumerable<Auction> GetAllBought(Auction auction);
+        Auction FindAuction(int id);
     }
 }

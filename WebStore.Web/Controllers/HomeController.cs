@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebStore.Services.Contracts.Dto;
@@ -14,12 +15,21 @@ namespace WebStore.Web.Controllers
         
 
         private readonly IAuctionService _auctionService;
-        public HomeController(IAuctionService auctionService) 
+        private readonly IUserService _userService;
+        public HomeController(IAuctionService auctionService, IUserService userService) 
         {
             
             _auctionService = auctionService;
+            _userService = userService;
         }
+        /*
         
+        public HomeController(IUserService userService)
+        {
+
+            _userService = userService;
+        }
+        */
         public ActionResult Index()
         {
             
@@ -35,17 +45,44 @@ namespace WebStore.Web.Controllers
             return RedirectToAction("Index", "CreateAuction");
         }
 
-       /*
-        public ActionResult Buy()
+        
+        public ActionResult Buy(int? id)
         {
-            AuctionDto auction = new AuctionDto();
-            auction.Buyer.UserName = "Pera";
-            auction.Id =  Convert.ToInt32(Request["id"]);
-            _auctionService.UpdateAuction(auction);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
-            return Content(auction.Id.ToString());
+            var auction = _auctionService.FindAuction(id.Value);
+
+
+            if (Convert.ToDouble(Session["Credit"]) - auction.Price >= 0 && auction.Seller.UserName != Session["UserName"].ToString())
+            {
+                auction.Buyer = new UserDto();
+                auction.Buyer.UserName = Session["UserName"].ToString();
+
+                var user = new UserDto();
+                user.UserName = Session["UserName"].ToString();
+                user.Credit = Convert.ToDouble(Session["Credit"]);
+                
+
+                _userService.UpdateUser(user, auction);              
+                _auctionService.UpdateAuction(auction);
+
+                var user1 = new UserDto();
+                user1.UserName = Session["UserName"].ToString();
+                double credit = _userService.GetUserCredit(user1);
+                Session["Credit"] = credit;
+
+                return RedirectToAction("Index", "Home", null);
+
+            }
+            else
+            {
+                return Content("Not enough credit");
+            }
         }
-        */
+    
 
     }
 }

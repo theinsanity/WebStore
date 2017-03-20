@@ -16,5 +16,6 @@ namespace WebStore.Data.Contracts.RepositoryInterface
         bool CheckUserUsername(User user);
         bool LoginValidation(User user);
         double GetUserCredit(User user);
+        void UpdateUser(User user, User user1);
     }
 }

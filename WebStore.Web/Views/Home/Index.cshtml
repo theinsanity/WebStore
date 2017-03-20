@@ -16,7 +16,7 @@
                 <td >@auction.Name</td>
                 <td>@auction.Price</td>
                 <td >@auction.Seller.UserName</td>
-                <td class="btn-primary" align="center">Buy</td>
+                <td class="btn-primary" align="center">@Html.ActionLink("Buy", "Buy", new { id=auction.Id })</td>
             </tr>
             
             

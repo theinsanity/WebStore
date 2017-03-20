@@ -24,7 +24,7 @@ namespace WebStore.Data
         public User MapTableEnityToObject(IDataRecord record)
         {
             var entity = new User();
-            
+
             entity.UserName = (string)record["UserName"];
             entity.Email = (string)record["Email"];
             entity.Password = (string)record["Password"];
@@ -46,17 +46,17 @@ namespace WebStore.Data
 
                 var result = new List<User>();
                 if (reader.HasRows != true) return result;
-                
-                    while (reader.Read())
-                    {
-                        var act = new User();
-                        act = MapTableEnityToObject(reader);
-                        result.Add(act);
 
-                    }
+                while (reader.Read())
+                {
+                    var act = new User();
+                    act = MapTableEnityToObject(reader);
+                    result.Add(act);
 
-                
-               
+                }
+
+
+
 
                 return result;
             }
@@ -71,7 +71,7 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@usremail", user.Email);
-                
+
 
 
                 var reader = command.ExecuteReader();
@@ -125,9 +125,9 @@ namespace WebStore.Data
 
 
         }
-       
 
-       
+
+
 
 
         public bool CheckUserEmail(User user)
@@ -162,11 +162,11 @@ namespace WebStore.Data
             return CreateCommand(query, _connectionString);
 
         }
-       
-       
 
-    private void CreateCommand(
-            string connectionString, User user)
+
+
+        private void CreateCommand(
+                string connectionString, User user)
         {
             string queryString = "Insert into [User](UserName, Email, Password, Credit) values(@username, @email, @password, 0)";
 
@@ -179,7 +179,7 @@ namespace WebStore.Data
                 command.Parameters.AddWithValue("@username", user.UserName);
                 command.Parameters.AddWithValue("@email", user.Email);
                 command.Parameters.AddWithValue("@password", user.Password);
-                
+
 
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -194,7 +194,7 @@ namespace WebStore.Data
         public void CreateUser(User user)
         {
 
-           CreateCommand(_connectionString, user);
+            CreateCommand(_connectionString, user);
 
         }
         public bool LoginValidation(User user)
@@ -229,16 +229,16 @@ namespace WebStore.Data
                     return false;
             }
         }
-    public double GetUserCredit(User user)
-    {
-        string queryString = "Select * from [User] where UserName=@usrusername";
-        using (var connection = new SqlConnection(
-                  _connectionString))
+        public double GetUserCredit(User user)
         {
-            connection.Open();
+            string queryString = "Select * from [User] where UserName=@usrusername";
+            using (var connection = new SqlConnection(
+                      _connectionString))
+            {
+                connection.Open();
 
-            var command = new SqlCommand(queryString, connection);
-            command.Parameters.AddWithValue("@usrusername", user.UserName);
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@usrusername", user.UserName);
                 var reader = command.ExecuteReader();
                 var result = new List<User>();
                 if (reader.HasRows == true)
@@ -252,8 +252,31 @@ namespace WebStore.Data
 
                 }
                 return result[0].Credit;
-           
+
+            }
         }
+        private void UpdateCommand(string connectionString, User user)
+        {
+            const string queryString = "Update [User] set Credit=@credit where UserName=@username";
+            using (var connection = new SqlConnection(
+                     connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@credit", user.Credit);
+                command.Parameters.AddWithValue("@username", user.UserName);
+                command.ExecuteNonQuery();
+            }
+        }
+        public void UpdateUser(User user,User user1)
+        {
+            UpdateCommand(_connectionString, user);
+            UpdateCommand(_connectionString, user1);
+
+        }
+        
+
+
     }
-}
 }

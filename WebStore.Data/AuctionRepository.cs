@@ -14,10 +14,6 @@ namespace WebStore.Data
     public class AuctionRepository : IAuctionRepository
     {
 
-    
-
-
-
         private readonly string _connectionString;
 
         public AuctionRepository(string connectionString)
@@ -222,7 +218,42 @@ namespace WebStore.Data
         {
             UpdateCommand(_connectionString, auction);
         }
+        private Auction FindAuctionCommand(string connectionString,int id)
+        {
+            const string queryString = "Select * from [Auction] where Id=@id";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
 
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", id);
+               
+
+
+                var reader = command.ExecuteReader();
+
+                var result = new Auction();
+                if (reader.HasRows != true)
+                {
+                    return result;
+                }
+
+                while (reader.Read())
+                {
+                    var act = MapTableEnityToObject(reader);
+                    result = act;
+                }
+
+
+                return result;
+            }
+
+        }
+        public Auction FindAuction(int id)
+        {
+            return FindAuctionCommand(_connectionString ,id);
+        }
 
     }
 }

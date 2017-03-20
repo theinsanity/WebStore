@@ -45,7 +45,16 @@ namespace WebStore.Services
         {
             Auction act = new Auction();
             act.Id = auction.Id;
-            act.Buyer.UserName = auction.Buyer.UserName;
+            act.Buyer = new User();
+            if(act.Buyer == null)
+            {
+                auction.Buyer = null;
+            }
+            else
+            {
+                act.Buyer.UserName = auction.Buyer.UserName;
+            }
+           
             _auctionRepository.UpdateAuction(act);
 
 
@@ -86,6 +95,29 @@ namespace WebStore.Services
                 auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = new UserDto {UserName = auction.Seller.UserName } });
             }
             return auctionDtos;
+
+        }
+        public AuctionDto FindAuction(int id)
+        {
+            var auction = new AuctionDto();
+            var auct = _auctionRepository.FindAuction(id);
+            auction.Id = auct.Id;
+            auction.Name = auct.Name;
+            auction.Price = auct.Price;
+            auction.Buyer = new UserDto();
+            if (auct.Buyer == null)
+            {
+                auction.Buyer.UserName = null;
+            }
+            else
+            {
+                auction.Buyer.UserName = auct.Buyer.UserName;
+            }
+            auction.Seller = new UserDto();
+            auction.Seller.UserName = auct.Seller.UserName;
+            auction.Price = auct.Price;
+
+            return auction;
 
         }
     }

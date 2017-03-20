@@ -14,6 +14,7 @@ namespace WebStore.Services.Contracts.ServiceInterface
         void UpdateAuction(AuctionDto auction);
         IEnumerable<AuctionDto> GetAllSold(AuctionDto act);
         IEnumerable<AuctionDto> GetAllBought(AuctionDto act);
+        AuctionDto FindAuction(int id);
     }
     
 }

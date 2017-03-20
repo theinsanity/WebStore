@@ -74,6 +74,26 @@ namespace WebStore.Services
             usr.UserName = user.UserName;
             return _userRepository.GetUserCredit(usr);
         }
+        public void UpdateUser(UserDto user,AuctionDto auction)
+        {
+            var usr = new User();
+            usr.UserName = user.UserName; 
+            var usr1 = new User();
+            usr1.UserName = auction.Seller.UserName;
+            var credit = _userRepository.GetUserCredit(usr1);
+            var usr2 = new User();
+            usr2.UserName = auction.Seller.UserName;
+            if (user.Credit - auction.Price >= 0)
+            {
+                usr.Credit = user.Credit - auction.Price;
+                usr2.Credit = credit + auction.Price; 
 
+            }
+            else
+            {
+                return;
+            }
+            _userRepository.UpdateUser(usr, usr2);
+        }
     }
 }
