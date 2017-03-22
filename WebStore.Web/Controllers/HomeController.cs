@@ -90,7 +90,7 @@ namespace WebStore.Web.Controllers
             }
 
             var auction = _auctionService.FindAuction(id.Value);
-            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller=auction.Seller});
+            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller=auction.Seller ,Date_Added=auction.Date_Added, Description=auction.Description, Image_Path=auction.Image_Path});
         }
 
     }

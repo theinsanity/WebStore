@@ -31,7 +31,9 @@ namespace WebStore.Data
                 Name = (string)record["Name"],
                 Price = (double)record["Price"],
                 Seller = new User { UserName = (string)record["Seller"] },
-                Buyer = new User()
+                Buyer = new User(),
+                Description = (string)record["Description"],
+                Image_Path = (string)record["Image_Path"]
             };
             if (record["Buyer"] == DBNull.Value)
             {
@@ -42,6 +44,7 @@ namespace WebStore.Data
                 entity.Buyer.UserName = (string)record["Buyer"];
             }
             entity.Status = (string)record["Status"];
+            
             return entity;
         }
 
@@ -173,7 +176,7 @@ namespace WebStore.Data
         private void CreateCommand(
             string connectionString, Auction auction)
         {
-            const string queryString = "Insert into [Auction] (Name, Price, Buyer, Seller, Status) values(@name,@price,null,@seller,'Pending')";
+            const string queryString = "Insert into [Auction] (Name, Price, Buyer, Seller, Status, Date_Purchased, Date_Added, Description, Image_Path) values(@name,@price,null,@seller,'Pending',null, current_timestamp, @desc, @imgpth)";
 
             using (var connection = new SqlConnection(
                       connectionString))
@@ -184,6 +187,8 @@ namespace WebStore.Data
                 command.Parameters.AddWithValue("@name", auction.Name);
                 command.Parameters.AddWithValue("@price", auction.Price);
                 command.Parameters.AddWithValue("@seller", auction.Seller.UserName);
+                command.Parameters.AddWithValue("@desc", auction.Description);
+                command.Parameters.AddWithValue("@imgpth", auction.Image_Path);
 
                 command.ExecuteNonQuery();
 
@@ -201,7 +206,7 @@ namespace WebStore.Data
 
         private void UpdateCommand(string connectionString, Auction auction)
         {
-            const string queryString = "Update [Auction] set Buyer=@buyer,Status='Sold' where id=@id";
+            const string queryString = "Update [Auction] set Buyer=@buyer,Status='Sold',date_purchased=current_timestamp where id=@id";
             using (var connection = new SqlConnection(
                      connectionString))
             {

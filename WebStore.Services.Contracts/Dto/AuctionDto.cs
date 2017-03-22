@@ -14,5 +14,9 @@ namespace WebStore.Services.Contracts.Dto
         public UserDto Buyer { get; set; }
         public UserDto Seller { get; set; }
         public string Status { get; set; }
+        public string Description { get; set; }
+        public string Image_Path { get; set; }
+        public DateTime Date_Added { get; set; }
+        public DateTime Date_Purchased { get; set; }
     }
 }

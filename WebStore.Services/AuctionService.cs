@@ -39,6 +39,8 @@ namespace WebStore.Services
             act.Price = auction.Price;
             act.Seller = new User();
             act.Seller.UserName = auction.Seller.UserName;
+            act.Description = auction.Description;
+            act.Image_Path = auction.Image_Path;
            _auctionRepository.CreateAuction(act);
         }
         public void UpdateAuction (AuctionDto auction)
@@ -105,6 +107,8 @@ namespace WebStore.Services
             auction.Name = auct.Name;
             auction.Price = auct.Price;
             auction.Buyer = new UserDto();
+            auction.Description = auct.Description;
+            auction.Image_Path = auct.Image_Path;
             if (auct.Buyer == null)
             {
                 auction.Buyer.UserName = null;

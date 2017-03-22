@@ -28,7 +28,8 @@ namespace WebStore.Web.Controllers
                 auction.Price = newAuction.Price;
                 auction.Seller = new UserDto();
                 auction.Seller.UserName = Session["UserName"].ToString();
-                
+                auction.Description = newAuction.Description;
+                auction.Image_Path = newAuction.Image_Path;
 
                 try
                 {

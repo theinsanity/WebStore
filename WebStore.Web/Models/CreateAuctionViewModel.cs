@@ -15,6 +15,7 @@ namespace WebStore.Web.Models
         public double Price { get; set; }
         public string UserName { get; set; }
         public double Credit { get; set; }
-
+        public string Description { get; set; }
+        public string Image_Path { get; set; }
     }
 }

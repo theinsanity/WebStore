@@ -3,21 +3,26 @@
   
 
 
-    @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
-    {
-    <form method="post">
+@using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
+{
+  
 
-       
         <div>
-            <label>Item Name:</label>
+            <p>@Html.LabelFor(m => m.Name)</p>
             <p>@Html.TextBoxFor(m => m.Name)</p>
         </div>
 
         <div>
-            <label>Price:</label>
+            <p>@Html.LabelFor(m => m.Price)</p>
             <p>@Html.TextBoxFor(m => m.Price)</p>
         </div>
-
+        <div>
+            <p>@Html.LabelFor(m => m.Description)</p>
+            <p>@Html.TextAreaFor(m => m.Description)</p>
+        </div>
+        <div>
+            <p>@Html.LabelFor(m => m.Image_Path)</p>
+            <p>@Html.TextBoxFor(m => m.Image_Path)</p>
+        </div>
         <input type="submit" class="btn btn-default" value="Submit" />
-    </form>
-    }
+}
