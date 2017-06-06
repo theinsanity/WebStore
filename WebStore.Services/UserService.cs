@@ -12,9 +12,11 @@ namespace WebStore.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private readonly IBCryptHashService _bcryptHashService;
+        public UserService(IUserRepository userRepository, IBCryptHashService bcryptHashService)
         {
             _userRepository = userRepository;
+            _bcryptHashService = bcryptHashService;
         }
         public IEnumerable<UserDto> GetAllUsers()
         {
@@ -57,16 +59,18 @@ namespace WebStore.Services
             User usr = new User();
             usr.UserName = user.UserName;
             usr.Email = user.Email;
-            usr.Password = user.Password;
+            usr.Password = _bcryptHashService.GetHashedValue(user.Password);
             usr.Credit = user.Credit;
             _userRepository.CreateUser(usr);
         }
         public bool LoginValidation(UserDto user)
         {
             var usr = new User();
-            usr.UserName = user.UserName;
-            usr.Password = user.Password;
-            return _userRepository.LoginValidation(usr);
+            usr.UserName = user.UserName;            
+            var usr1 = new User();
+            usr1 = _userRepository.GetUser(usr);
+            return _bcryptHashService.IsPasswordsEqual(user.Password, usr1.Password);
+
         }
         public double GetUserCredit(UserDto user)
         {

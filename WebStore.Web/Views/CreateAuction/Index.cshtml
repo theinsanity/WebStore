@@ -1,28 +1,52 @@
 ﻿@model WebStore.Web.Models.CreateAuctionViewModel
+@{
+    ViewBag.Title = "Create auction";
 
-  
-
-
-@using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
-{
-  
-
-        <div>
-            <p>@Html.LabelFor(m => m.Name)</p>
-            <p>@Html.TextBoxFor(m => m.Name)</p>
-        </div>
-
-        <div>
-            <p>@Html.LabelFor(m => m.Price)</p>
-            <p>@Html.TextBoxFor(m => m.Price)</p>
-        </div>
-        <div>
-            <p>@Html.LabelFor(m => m.Description)</p>
-            <p>@Html.TextAreaFor(m => m.Description)</p>
-        </div>
-        <div>
-            <p>@Html.LabelFor(m => m.Image_Path)</p>
-            <p>@Html.TextBoxFor(m => m.Image_Path)</p>
-        </div>
-        <input type="submit" class="btn btn-default" value="Submit" />
 }
+<div class="col-md-4">
+    <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Create new auction</h3>
+        </div>
+        <div class="panel-body">
+
+
+    @using (Html.BeginForm("Create", "CreateAuction", FormMethod.Post))
+            {
+        @Html.ValidationSummary(true)
+
+        if (@ViewBag.Message != null)
+        {
+            <div style="border:1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+        <fieldset>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Name" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+               @Html.TextBoxFor(m => m.Price, new { @class = "form-control", @placeholder = "Price" })
+                @Html.ValidationMessageFor(m => m.Price)
+            </div>
+            <div class="form-group">
+               @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Description",@rows=5,@id="comment" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+            <div class="form-group">
+               @Html.TextBoxFor(m => m.Image_Path, new { @class = "form-control", @placeholder = "Image_Path" })
+                @Html.ValidationMessageFor(m => m.Image_Path)
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="submit" />
+         </fieldset>
+
+
+       
+                
+                }
+            </div>
+    </div>
+</div>

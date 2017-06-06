@@ -12,10 +12,14 @@ namespace WebStore.Web.Controllers
     public class UserController : Controller
     {
         private readonly IAuctionService _auctionService;
-        public UserController(IAuctionService auctionService)
+        private readonly IUserService _userService;
+        public UserController(IAuctionService auctionService, IUserService userService)
         {
+
             _auctionService = auctionService;
+            _userService = userService;
         }
+
         public ActionResult Logout()
         {
             return RedirectToAction("Index", "Login", null);
@@ -26,7 +30,7 @@ namespace WebStore.Web.Controllers
             act.Seller = new UserDto();
             act.Seller.UserName =Session["UserName"].ToString();
             avm.UserName = Session["UserName"].ToString();
-            avm.Credit = Convert.ToDouble(Session["Credit"]);
+            avm.Credit = Convert.ToDouble(_userService.GetUserCredit(new UserDto { UserName= avm.UserName}));
 
             var auctionsSold = _auctionService.GetAllSold(act);
             var auctionsBought = _auctionService.GetAllBought(act);

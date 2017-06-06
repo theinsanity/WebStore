@@ -21,7 +21,7 @@ namespace WebStore.Web.Controllers
         {
             
 
-            if (ModelState.IsValid == true)
+            if (ModelState.IsValid)
             {
                 AuctionDto auction = new AuctionDto();
                 auction.Name = newAuction.Name;

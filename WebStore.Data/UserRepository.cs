@@ -8,6 +8,8 @@ using WebStore.Data.Contracts.RepositoryInterface;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using DevOne.Security.Cryptography.BCrypt;
+
 namespace WebStore.Data
 {
     public class UserRepository : IUserRepository
@@ -18,7 +20,7 @@ namespace WebStore.Data
         {
             _connectionString = connectionString;
         }
-
+        
 
 
         public User MapTableEnityToObject(IDataRecord record)
@@ -29,8 +31,8 @@ namespace WebStore.Data
             entity.Email = (string)record["Email"];
             entity.Password = (string)record["Password"];
             entity.Credit = (double)record["Credit"];
-
-
+            
+            
             return entity;
         }
         private List<User> CreateCommand(string queryString,
@@ -52,10 +54,10 @@ namespace WebStore.Data
                     var act = new User();
                     act = MapTableEnityToObject(reader);
                     result.Add(act);
-
+                  
                 }
 
-
+                
 
 
                 return result;
@@ -155,7 +157,11 @@ namespace WebStore.Data
                 return true;
             }
         }
-
+        public User GetUser(User user)
+        {
+            var Data = GetUserUsernameCommand(_connectionString, user);
+            return Data[0];
+        }
         public IEnumerable<User> GetAllUsers()
         {
             string query = "Select * from [User]";
@@ -176,10 +182,14 @@ namespace WebStore.Data
                 connection.Open();
 
                 var command = new SqlCommand(queryString, connection);
+
+
+               // string mySalt = Crypter.Blowfish.GenerateSalt();
+                
                 command.Parameters.AddWithValue("@username", user.UserName);
                 command.Parameters.AddWithValue("@email", user.Email);
                 command.Parameters.AddWithValue("@password", user.Password);
-
+                
 
                 command.ExecuteNonQuery();
                 connection.Close();
@@ -197,38 +207,7 @@ namespace WebStore.Data
             CreateCommand(_connectionString, user);
 
         }
-        public bool LoginValidation(User user)
-        {
-            string queryString = "Select * from [User] where UserName=@usrusername and Password=@usrpasswd";
-            using (var connection = new SqlConnection(
-                      _connectionString))
-            {
-                connection.Open();
-
-                var command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@usrusername", user.UserName);
-                command.Parameters.AddWithValue("@usrpasswd", user.Password);
-
-
-                var reader = command.ExecuteReader();
-
-                var result = new List<User>();
-                if (reader.HasRows == true)
-                {
-                    while (reader.Read())
-                    {
-                        var act = MapTableEnityToObject(reader);
-                        result.Add(act);
-
-                    }
-
-                }
-                if (result.Count() == 1)
-                    return true;
-                else
-                    return false;
-            }
-        }
+        
         public double GetUserCredit(User user)
         {
             string queryString = "Select * from [User] where UserName=@usrusername";

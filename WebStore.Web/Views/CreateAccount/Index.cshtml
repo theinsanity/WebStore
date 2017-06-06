@@ -1,35 +1,59 @@
 ﻿@model WebStore.Web.Models.CreateAccountViewModel
 
 @{
-    ViewBag.Title = "Index";
- //  string  un = Request["userame"];
+    ViewBag.Title = "Register";
+
 }
 
-<!DOCTYPE html>
+<div class="col-md-4">
+    <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Register</h3>
+        </div>
+        <div class="panel-body">
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
     @using (Html.BeginForm("Create", "CreateAccount", FormMethod.Post))
-    {
-        <div>
-            <p>@Html.TextBoxFor(m => m.UserName) Username</p>
-        </div>
-        <div>
-            <p>@Html.TextBoxFor(m => m.Email) Email</p>
-        </div>
-        <div>
-            <p>@Html.PasswordFor(m => m.Password) Password</p>
-        </div>
-        <div>
-            <p>@Html.PasswordFor(m => m.RepeatPassword) Repeat Password</p>
-        </div>
-        <input type="submit" value="submit" />
+            {
+        @Html.ValidationSummary(true)
 
-    }
+        if (@ViewBag.Message != null)
+        {
+            <div style="border:1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+        <fieldset>
+            <div class="form-group">              
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+                    @Html.ValidationMessageFor(m => m.UserName)
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
 
-</body>
-</html>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="form-group">
+                @Html.PasswordFor(m => m.RepeatPassword, new { @class = "form-control", @placeholder = "Repeat Password" })
+                @Html.ValidationMessageFor(m => m.RepeatPassword)
+            </div>
+
+            <input class="btn btn-primary" type="submit" value="submit" />
+
+        </fieldset>
+                
+                
+              
+                
+
+                }
+
+
+
+            </div>
+    </div>
+</div>

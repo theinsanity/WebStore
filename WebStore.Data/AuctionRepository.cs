@@ -22,7 +22,7 @@ namespace WebStore.Data
         }
 
 
-        
+
         public Auction MapTableEnityToObject(IDataRecord record)
         {
             var entity = new Auction
@@ -34,6 +34,7 @@ namespace WebStore.Data
                 Buyer = new User(),
                 Description = (string)record["Description"],
                 Image_Path = (string)record["Image_Path"]
+
             };
             if (record["Buyer"] == DBNull.Value)
             {
@@ -43,6 +44,40 @@ namespace WebStore.Data
             {
                 entity.Buyer.UserName = (string)record["Buyer"];
             }
+            if (record["Description"] == DBNull.Value)
+            {
+                entity.Description = null;
+            }
+            else
+            {
+                entity.Description = (string)record["Description"];
+            }
+            if (record["Image_Path"] == DBNull.Value)
+            {
+                entity.Image_Path = null;
+            }
+            else
+            {
+                entity.Image_Path = (string)record["Image_Path"];
+            }
+            if (record["Date_Added"] == DBNull.Value)
+            {
+                entity.Date_Added = null;
+            }
+            else
+            {
+                entity.Date_Added = (DateTime)record["Date_Added"];
+            }
+            if (record["Date_Purchased"] == DBNull.Value)
+            {
+                
+                entity.Date_Purchased = null;
+            }
+            else
+            {
+                entity.Date_Purchased = (DateTime)record["Date_Added"];
+            }
+
             entity.Status = (string)record["Status"];
             
             return entity;

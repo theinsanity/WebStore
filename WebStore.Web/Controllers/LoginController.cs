@@ -17,22 +17,29 @@ namespace WebStore.Web.Controllers
             _userService = userService;
         }
         // GET: Login
+        [ValidateAntiForgeryToken]
         public ActionResult Login(LoginViewModel user)
         {
-            var usr = new UserDto();
-            usr.UserName = user.UserName;
-            usr.Password = user.Password;
-            if (_userService.LoginValidation(usr))
+            if (ModelState.IsValid)
             {
-                Session["UserName"] = user.UserName;
-                double credit = _userService.GetUserCredit(usr);
-                Session["Credit"] = credit;
-                return RedirectToAction("Index", "Home", null);
+                var usr = new UserDto();
+                usr.UserName = user.UserName;
+                usr.Password = user.Password;
+                if (_userService.LoginValidation(usr))
+                {
+                    Session["UserName"] = user.UserName;
+                    //double credit = _userService.GetUserCredit(usr);
+                    return RedirectToAction("Index", "Home", null);
+                }
+                else
+                {
+
+                    return Content("Login failed!");
+                }
             }
             else
             {
-
-                return Content("Login failed!");
+                return Content("Login failed");
             }
         }
         public ActionResult Index()

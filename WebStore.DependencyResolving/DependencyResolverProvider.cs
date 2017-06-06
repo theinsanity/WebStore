@@ -46,7 +46,7 @@ namespace WebStore.DependencyResolving
             _container.Register<IAuctionRepository>(() => new AuctionRepository(_connectionString));
             _container.Register<IUserRepository>(() => new UserRepository(_connectionString));
             _container.Register<IUserService, UserService>(Lifestyle.Transient);
-            
+            _container.Register<IBCryptHashService, BCryptHashService>(Lifestyle.Transient);
             _container.Register<IAuctionService, AuctionService>(Lifestyle.Transient);
         }
        

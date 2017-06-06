@@ -36,7 +36,7 @@ namespace WebStore.Web.Controllers
             var auctions = _auctionService.GetAllAuctions();
             var user = new UserDto();
             user.UserName = Session["UserName"].ToString();
-            user.Credit = Convert.ToDouble(Session["Credit"]);
+            user.Credit = _userService.GetUserCredit(new UserDto { UserName = user.UserName });
             return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit });
         }
         
@@ -55,24 +55,24 @@ namespace WebStore.Web.Controllers
 
             var auction = _auctionService.FindAuction(id.Value);
 
+            var usr = new UserDto();
 
-            if (Convert.ToDouble(Session["Credit"]) - auction.Price >= 0 && auction.Seller.UserName != Session["UserName"].ToString())
+            usr.UserName = Session["UserName"].ToString();
+            usr.Credit = _userService.GetUserCredit(new UserDto { UserName = usr.UserName });
+
+            if (Convert.ToDouble(usr.Credit) - auction.Price >= 0 && auction.Seller.UserName != Session["UserName"].ToString())
             {
                 auction.Buyer = new UserDto();
-                auction.Buyer.UserName = Session["UserName"].ToString();
+                auction.Buyer.UserName = usr.UserName;
 
                 var user = new UserDto();
-                user.UserName = Session["UserName"].ToString();
-                user.Credit = Convert.ToDouble(Session["Credit"]);
-                
+                user.UserName = usr.UserName;
+                user.Credit = Convert.ToDouble(usr.Credit);
+
+
 
                 _userService.UpdateUser(user, auction);              
                 _auctionService.UpdateAuction(auction);
-
-                var user1 = new UserDto();
-                user1.UserName = Session["UserName"].ToString();
-                double credit = _userService.GetUserCredit(user1);
-                Session["Credit"] = credit;
 
                 return RedirectToAction("Index", "Home", null);
 

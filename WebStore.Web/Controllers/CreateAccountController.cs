@@ -20,7 +20,7 @@ namespace WebStore.Web.Controllers
        [HttpPost]
        public ActionResult Create(CreateAccountViewModel newUser)
         {
-            if (ModelState.IsValid == true)
+            if (ModelState.IsValid)
             {
                 /* check for passrwords */
                 if (newUser.Password != newUser.RepeatPassword)

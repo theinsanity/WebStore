@@ -1,12 +1,36 @@
 ﻿@model WebStore.Web.Models.ItemsViewModel
 
 
-<h1>Name:</h1>
-@Model.Name
-<h1>Price:</h1>
-@Model.Price
-<h1>Seller:</h1>
-@Model.Seller.UserName
-<textarea>@Model.Description</textarea>
-<img src="@Model.Image_Path" alt="slikatrebaovde"  />
 
+<div >
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@Model.Name</h3>
+        </div>
+        <div class="panel-body">
+
+            <fieldset>
+                
+                <div class="form-group">
+                    <img src="@Model.Image_Path" alt="slikatrebaovde" />
+                </div>
+                <div class="form-group">
+                   Price: @Model.Price
+                </div>
+                <div class="form-group">
+                   Seller: @Model.Seller.UserName
+                </div>
+                <div class="form-group">
+                   <textarea>@Model.Description</textarea>
+                </div>
+
+            </fieldset>
+                  
+                   
+                   
+                   
+                    
+
+                </div>
+        </div>
+</div>

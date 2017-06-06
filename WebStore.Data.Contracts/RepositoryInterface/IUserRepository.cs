@@ -12,10 +12,13 @@ namespace WebStore.Data.Contracts.RepositoryInterface
          
         IEnumerable<User> GetAllUsers();
         void CreateUser(User user);
-        bool CheckUserEmail(User user);
-        bool CheckUserUsername(User user);
-        bool LoginValidation(User user);
-        double GetUserCredit(User user);
         void UpdateUser(User user, User user1);
+        User GetUser(User user);
+
+        bool CheckUserEmail(User user);
+        bool CheckUserUsername(User user); 
+        double GetUserCredit(User user);
+        
+        
     }
 }

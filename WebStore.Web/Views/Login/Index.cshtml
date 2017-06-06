@@ -1,20 +1,55 @@
 ﻿@model WebStore.Web.Models.LoginViewModel
 
 @{
-    ViewBag.Title = "Index";
- }
-
-
-@using (Html.BeginForm("Login", "Login", FormMethod.Post))
-{
-    <div>
-        <p>@Html.TextBoxFor(m => m.UserName) Username</p>
-    </div>
-     <div>
-        <p>@Html.PasswordFor(m => m.Password) Password</p>
-     </div>
-        
-        <input class="btn btn-primary" type="submit" value="submit" />
-
+    ViewBag.Title = "Login";
 }
-@Html.ActionLink("Create new account", "Index", "CreateAccount", null, new { @class = "btn btn-default" })
+
+<div class="col-md-4">
+    <div class="login-panel panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Sign In</h3>
+        </div>
+        <div class="panel-body">
+
+
+    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+            {
+        @Html.AntiForgeryToken() // this is for prevent CSRF attack
+
+        @Html.ValidationSummary(true)
+
+        if (@ViewBag.Message != null)
+        {
+            <div style="border:1px solid red">
+                @ViewBag.Message
+            </div>
+        }
+
+        <fieldset>
+            <div class="form-group">
+                
+                
+                @Html.TextBoxFor(m => m.UserName ,new { @class = "form-control" , @placeholder="Username"})
+                @Html.ValidationMessageFor(m => m.UserName)
+
+            </div>
+               
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+         <div>
+            
+                <input class="btn btn-primary" type="submit" value="submit" align="left" />
+            <div style="float:right">
+                @Html.ActionLink("Register", "Index", "CreateAccount", null, new { @class = "btn btn-default"  })
+            </div>
+        </div>
+
+</fieldset>
+                }
+
+
+            </div>
+    </div>
+</div>
