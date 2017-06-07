@@ -110,16 +110,19 @@ namespace WebStore.Services
         }
 
 
-        /*
+        
         public void UpdateUser(UserDto user,AuctionDto auction)
         {
             var usr = new User();
-            usr.UserName = user.UserName; 
+            usr.UserId = user.UserId;
             var usr1 = new User();
-            usr1.UserName = auction.Seller.UserName;
-            var credit = _userRepository.GetUserByUsername(usr1);
+            usr1.UserId = auction.Seller_Id;
+
+            var credit = _userRepository.GetUserById(new User {UserId = usr1.UserId }).Credit;
+
             var usr2 = new User();
-            usr2.UserName = auction.Seller.UserName;
+
+            usr2.UserId = auction.Seller_Id;
             if (user.Credit - auction.Price >= 0)
             {
                 usr.Credit = user.Credit - auction.Price;
@@ -132,7 +135,7 @@ namespace WebStore.Services
             }
             _userRepository.UpdateUser(usr, usr2);
         }
-        */
+        
     }
     
 }

@@ -17,6 +17,6 @@ namespace WebStore.Services.Contracts.ServiceInterface
         double GetUserCredit(UserDto user);
         UserDto GetUserId(UserDto user);
         UserDto GetUserById(UserDto user);
-       // void UpdateUser(UserDto user, AuctionDto auction);
+        void UpdateUser(UserDto user, AuctionDto auction);
     }
 }

@@ -32,7 +32,23 @@ namespace WebStore.Web.Controllers
             avm.Credit = Convert.ToDouble(_userService.GetUserCredit(new UserDto { UserName= avm.UserName}));
 
             var auctionsSold = _auctionService.GetAllSold(act);
+
+            foreach (var auction in auctionsSold)
+            {               
+
+                auction.BoSName = _userService.GetUserById(new UserDto { UserId = (int)auction.Buyer_Id }).UserName;
+            }
+
+
             var auctionsBought = _auctionService.GetAllBought(act);
+
+
+            foreach (var auction in auctionsBought)
+            {
+                auction.BoSName = _userService.GetUserById(new UserDto { UserId = auction.Seller_Id }).UserName;
+            }
+
+
             return View(new AuctionViewModel {AuctionsBought = auctionsBought, AuctionsSold = auctionsSold, UserName = avm.UserName,Credit= avm.Credit });
         
             

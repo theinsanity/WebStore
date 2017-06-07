@@ -15,6 +15,6 @@ namespace WebStore.Web.Models
         public string Image_Path { get; set; }
         public DateTime? Date_Added { get; set; }
         public DateTime? Date_Purchased { get; set; }
-
+        public string BoSName { get; set; }
     }
 }

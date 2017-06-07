@@ -27,6 +27,12 @@ namespace WebStore.Web.Controllers
         {
             
             var auctions = _auctionService.GetAllAuctions();
+
+            foreach(var auction in auctions)
+            {
+                auction.BoSName = _userService.GetUserById(new UserDto { UserId = auction.Seller_Id }).UserName;
+            }
+
             var user = new UserDto();
             user.UserName =  _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             user.Credit = _userService.GetUserCredit(new UserDto { UserName = user.UserName });
@@ -38,7 +44,7 @@ namespace WebStore.Web.Controllers
             return RedirectToAction("Index", "CreateAuction");
         }
 
-        /*
+        
         public ActionResult Buy(int? id)
         {
             if (id == null)
@@ -50,18 +56,17 @@ namespace WebStore.Web.Controllers
 
             var usr = new UserDto();
 
-            usr.UserName = Session["UserName"].ToString();
+            usr.UserName = _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             usr.Credit = _userService.GetUserCredit(new UserDto { UserName = usr.UserName });
 
-            if (Convert.ToDouble(usr.Credit) - auction.Price >= 0 && auction.Seller.UserName != Session["UserName"].ToString())
+            if (Convert.ToDouble(usr.Credit) - auction.Price >= 0 && auction.Seller_Id != Convert.ToInt32(Session["UserId"]))
             {
-                auction.Buyer = new UserDto();
-                auction.Buyer.UserName = usr.UserName;
+                auction.Buyer_Id = Convert.ToInt32(Session["UserId"]);
 
                 var user = new UserDto();
                 user.UserName = usr.UserName;
                 user.Credit = Convert.ToDouble(usr.Credit);
-
+                user.UserId = Convert.ToInt32(Session["UserId"]);
 
 
                 _userService.UpdateUser(user, auction);              
@@ -75,8 +80,8 @@ namespace WebStore.Web.Controllers
                 return Content("Not enough credit");
             }
         }
-        */
-       public ActionResult Details (int? id)
+
+        public ActionResult Details (int? id)
         {
             if (id == null)
             {
@@ -84,7 +89,8 @@ namespace WebStore.Web.Controllers
             }
 
             var auction = _auctionService.FindAuction(id.Value);
-            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller_Id=auction.Seller_Id ,Date_Added=auction.Date_Added, Description=auction.Description, Image_Path=auction.Image_Path});
+            string bname = _userService.GetUserById(new UserDto { UserId = auction.Seller_Id }).UserName;
+            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,BoSName=bname ,Date_Added=auction.Date_Added, Description=auction.Description, Image_Path=auction.Image_Path});
         }
 
     }

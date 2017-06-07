@@ -75,7 +75,7 @@ namespace WebStore.Data
             }
             else
             {
-                entity.Date_Purchased = (DateTime)record["Date_Added"];
+                entity.Date_Purchased = (DateTime)record["Date_Purchased"];
             }
 
             entity.Status = (string)record["Status"];
@@ -241,14 +241,14 @@ namespace WebStore.Data
 
         private void UpdateCommand(string connectionString, Auction auction)
         {
-            const string queryString = "Update [Auction] set Buyer=@buyer,Status='Sold',date_purchased=current_timestamp where id=@id";
+            const string queryString = "Update [Auction] set Buyer_Id=@buyerid,Status='Sold',date_purchased=current_timestamp where id=@id";
             using (var connection = new SqlConnection(
                      connectionString))
             {
                 connection.Open();
 
                 var command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@buyer", auction.Buyer_Id);
+                command.Parameters.AddWithValue("@buyerid", auction.Buyer_Id);
                 command.Parameters.AddWithValue("@id", auction.Id);
                 command.ExecuteNonQuery();
             }

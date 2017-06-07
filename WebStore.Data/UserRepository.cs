@@ -206,7 +206,7 @@ namespace WebStore.Data
                 
         private void UpdateCommand(string connectionString, User user)
         {
-            const string queryString = "Update [User] set Credit=@credit where UserName=@username";
+            const string queryString = "Update [User] set Credit=@credit where UserId=@usrid";
             using (var connection = new SqlConnection(
                      connectionString))
             {
@@ -214,7 +214,7 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@credit", user.Credit);
-                command.Parameters.AddWithValue("@username", user.UserName);
+                command.Parameters.AddWithValue("@usrid", user.UserId);
                 command.ExecuteNonQuery();
             }
         }
