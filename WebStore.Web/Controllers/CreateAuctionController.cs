@@ -26,8 +26,8 @@ namespace WebStore.Web.Controllers
                 AuctionDto auction = new AuctionDto();
                 auction.Name = newAuction.Name;
                 auction.Price = newAuction.Price;
-                auction.Seller = new UserDto();
-                auction.Seller.UserName = Session["UserName"].ToString();
+                auction.Seller_Id = Convert.ToInt32(Session["UserId"]);
+                //auction.Seller.UserName = Session["UserName"].ToString();
                 auction.Description = newAuction.Description;
                 auction.Image_Path = newAuction.Image_Path;
 

@@ -8,7 +8,7 @@ using WebStore.Data.Contracts.RepositoryInterface;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using DevOne.Security.Cryptography.BCrypt;
+
 
 namespace WebStore.Data
 {
@@ -26,15 +26,15 @@ namespace WebStore.Data
         public User MapTableEnityToObject(IDataRecord record)
         {
             var entity = new User();
-
+            entity.UserId = (int)record["UserId"];
             entity.UserName = (string)record["UserName"];
             entity.Email = (string)record["Email"];
             entity.Password = (string)record["Password"];
             entity.Credit = (double)record["Credit"];
             
-            
             return entity;
         }
+
         private List<User> CreateCommand(string queryString,
             string connectionString)
         {
@@ -56,13 +56,10 @@ namespace WebStore.Data
                     result.Add(act);
                   
                 }
-
-                
-
-
-                return result;
+             return result;
             }
         }
+
         private List<User> GetUserEmailCommand(string connectionString, User user)
         {
             string queryString = "Select * from [User] where Email=@usremail";
@@ -73,8 +70,6 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@usremail", user.Email);
-
-
 
                 var reader = command.ExecuteReader();
 
@@ -87,11 +82,9 @@ namespace WebStore.Data
                         result.Add(act);
 
                     }
-
                 }
                 return result;
-            }
-
+           }
 
         }
 
@@ -106,7 +99,36 @@ namespace WebStore.Data
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@usrusername", user.UserName);
 
+                var reader = command.ExecuteReader();
 
+                var result = new List<User>();
+                if (reader.HasRows == true)
+                {
+                    while (reader.Read())
+                    {
+                        var act = MapTableEnityToObject(reader);
+                        result.Add(act);
+
+                    }
+
+                }
+
+                return result;
+            }
+
+
+        }
+
+        private List<User> GetUserIdCommand(string connectionString, User user)
+        {
+            string queryString = "Select * from [User] where UserId=@usrId";
+            using (var connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@usrId", user.UserId);
 
                 var reader = command.ExecuteReader();
 
@@ -128,40 +150,22 @@ namespace WebStore.Data
 
         }
 
-
-
-
-
-        public bool CheckUserEmail(User user)
+        public User GetUserByEmail(User user)
         {
-            var Data = GetUserEmailCommand(_connectionString, user);
-
-            if (Data.Count() == 1) /* exists in db, return false */
-                return false;
-            else
-            {
-                return true;
-            }
+            var data = GetUserEmailCommand(_connectionString, user);
+            return data.FirstOrDefault();          
         }
-
-        public bool CheckUserUsername(User user)
+        public User GetUserById(User user)
         {
-            var Data = GetUserUsernameCommand(_connectionString, user);
-
-
-
-            if (Data.Count() == 1) /* exists in db, return false */
-                return false;
-            else
-            {
-                return true;
-            }
+            var data = GetUserIdCommand(_connectionString, user);
+            return data.FirstOrDefault();
         }
-        public User GetUser(User user)
+        public User GetUserByUsername(User user)
         {
-            var Data = GetUserUsernameCommand(_connectionString, user);
-            return Data[0];
+            var data = GetUserUsernameCommand(_connectionString, user);
+            return data.FirstOrDefault();
         }
+      
         public IEnumerable<User> GetAllUsers()
         {
             string query = "Select * from [User]";
@@ -183,9 +187,6 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
 
-
-               // string mySalt = Crypter.Blowfish.GenerateSalt();
-                
                 command.Parameters.AddWithValue("@username", user.UserName);
                 command.Parameters.AddWithValue("@email", user.Email);
                 command.Parameters.AddWithValue("@password", user.Password);
@@ -193,13 +194,8 @@ namespace WebStore.Data
 
                 command.ExecuteNonQuery();
                 connection.Close();
-                //  SqlDataReader reader = command.ExecuteReader();
-
-
             }
         }
-
-
 
         public void CreateUser(User user)
         {
@@ -207,33 +203,7 @@ namespace WebStore.Data
             CreateCommand(_connectionString, user);
 
         }
-        
-        public double GetUserCredit(User user)
-        {
-            string queryString = "Select * from [User] where UserName=@usrusername";
-            using (var connection = new SqlConnection(
-                      _connectionString))
-            {
-                connection.Open();
-
-                var command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@usrusername", user.UserName);
-                var reader = command.ExecuteReader();
-                var result = new List<User>();
-                if (reader.HasRows == true)
-                {
-                    while (reader.Read())
-                    {
-                        var act = MapTableEnityToObject(reader);
-                        result.Add(act);
-
-                    }
-
-                }
-                return result[0].Credit;
-
-            }
-        }
+                
         private void UpdateCommand(string connectionString, User user)
         {
             const string queryString = "Update [User] set Credit=@credit where UserName=@username";
@@ -252,10 +222,6 @@ namespace WebStore.Data
         {
             UpdateCommand(_connectionString, user);
             UpdateCommand(_connectionString, user1);
-
         }
-        
-
-
     }
 }

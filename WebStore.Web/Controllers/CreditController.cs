@@ -24,7 +24,7 @@ namespace WebStore.Web.Controllers
         // GET: Credit
         public ActionResult Index(CreditViewModel mv)
         {
-            mv.UserName = Session["UserName"].ToString();
+            mv.UserName = _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             mv.Credit = Convert.ToDouble(_userService.GetUserCredit(new UserDto {UserName = mv.UserName }));
             return View(new CreditViewModel { UserName = mv.UserName, Credit = mv.Credit });
         }

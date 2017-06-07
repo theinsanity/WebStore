@@ -27,7 +27,7 @@ namespace WebStore.Web.Controllers
                 usr.Password = user.Password;
                 if (_userService.LoginValidation(usr))
                 {
-                    Session["UserName"] = user.UserName;
+                    Session["UserId"] = _userService.GetUserId(usr).UserId;
                     //double credit = _userService.GetUserCredit(usr);
                     return RedirectToAction("Index", "Home", null);
                 }

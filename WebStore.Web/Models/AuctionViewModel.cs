@@ -13,8 +13,8 @@ namespace WebStore.Web.Models
 
         public string UserName { get; set; }
         public double Credit { get; set; }
-        public string Buyer { get; set; }
-        public string Seller { get; set; }
+        public int Buyer_Id { get; set; }
+        public int  Seller_Id { get; set; }
         public double Price { get; set; }
         public int Id { get; set; }
         public string Description { get; set; }

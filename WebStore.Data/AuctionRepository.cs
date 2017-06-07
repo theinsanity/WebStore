@@ -30,19 +30,19 @@ namespace WebStore.Data
                 Id = (int)record["Id"],
                 Name = (string)record["Name"],
                 Price = (double)record["Price"],
-                Seller = new User { UserName = (string)record["Seller"] },
-                Buyer = new User(),
-                Description = (string)record["Description"],
-                Image_Path = (string)record["Image_Path"]
+                Seller_Id = (int)record["Seller_Id"],
+                
+                //Description = (string)record["Description"],
+                //Image_Path = (string)record["Image_Path"]
 
             };
-            if (record["Buyer"] == DBNull.Value)
+            if(record["Buyer_Id"] == DBNull.Value)
             {
-                entity.Buyer = null;
+                entity.Buyer_Id = null;
             }
             else
             {
-                entity.Buyer.UserName = (string)record["Buyer"];
+                entity.Buyer_Id = (int)record["Buyer_Id"];
             }
             if (record["Description"] == DBNull.Value)
             {
@@ -122,7 +122,7 @@ namespace WebStore.Data
 
         private List<Auction> GetAllSoldCommand(string connectionString, Auction auction)
         {
-            const string queryString = "Select * from [Auction] where Status=@st and Seller= @sl";
+            const string queryString = "Select * from [Auction] where Status=@st and Seller_Id= @sl";
             using (var connection = new SqlConnection(
                       connectionString))
             {
@@ -130,7 +130,7 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@st", auction.Status);
-                command.Parameters.AddWithValue("@sl", auction.Seller.UserName);
+                command.Parameters.AddWithValue("@sl", auction.Seller_Id);
 
 
                 var reader = command.ExecuteReader();
@@ -165,7 +165,7 @@ namespace WebStore.Data
 
         private IEnumerable<Auction> GetAllBoughtCommand(string connectionString, Auction auction)
         {
-            const string queryString = "Select * from [Auction] where Status=@st and Buyer= @sl";
+            const string queryString = "Select * from [Auction] where Status=@st and Buyer_Id= @sl";
             using (SqlConnection connection = new SqlConnection(
                       connectionString))
             {
@@ -173,7 +173,7 @@ namespace WebStore.Data
 
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@st", auction.Status);
-                command.Parameters.AddWithValue("@sl", auction.Buyer.UserName);
+                command.Parameters.AddWithValue("@sl", auction.Buyer_Id);
 
 
                 var reader = command.ExecuteReader();
@@ -211,7 +211,7 @@ namespace WebStore.Data
         private void CreateCommand(
             string connectionString, Auction auction)
         {
-            const string queryString = "Insert into [Auction] (Name, Price, Buyer, Seller, Status, Date_Purchased, Date_Added, Description, Image_Path) values(@name,@price,null,@seller,'Pending',null, current_timestamp, @desc, @imgpth)";
+            const string queryString = "Insert into [Auction] (Name, Price, Buyer_Id, Seller_Id, Status, Date_Purchased, Date_Added, Description, Image_Path) values(@name,@price,null,@seller,'Pending',null, current_timestamp, @desc, @imgpth)";
 
             using (var connection = new SqlConnection(
                       connectionString))
@@ -221,7 +221,7 @@ namespace WebStore.Data
                 var command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@name", auction.Name);
                 command.Parameters.AddWithValue("@price", auction.Price);
-                command.Parameters.AddWithValue("@seller", auction.Seller.UserName);
+                command.Parameters.AddWithValue("@seller", auction.Seller_Id);
                 command.Parameters.AddWithValue("@desc", auction.Description);
                 command.Parameters.AddWithValue("@imgpth", auction.Image_Path);
 
@@ -248,7 +248,7 @@ namespace WebStore.Data
                 connection.Open();
 
                 var command = new SqlCommand(queryString, connection);
-                command.Parameters.AddWithValue("@buyer", auction.Buyer.UserName);
+                command.Parameters.AddWithValue("@buyer", auction.Buyer_Id);
                 command.Parameters.AddWithValue("@id", auction.Id);
                 command.ExecuteNonQuery();
             }

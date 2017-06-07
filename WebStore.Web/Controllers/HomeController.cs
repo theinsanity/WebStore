@@ -22,20 +22,13 @@ namespace WebStore.Web.Controllers
             _auctionService = auctionService;
             _userService = userService;
         }
-        /*
         
-        public HomeController(IUserService userService)
-        {
-
-            _userService = userService;
-        }
-        */
         public ActionResult Index()
         {
             
             var auctions = _auctionService.GetAllAuctions();
             var user = new UserDto();
-            user.UserName = Session["UserName"].ToString();
+            user.UserName =  _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             user.Credit = _userService.GetUserCredit(new UserDto { UserName = user.UserName });
             return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit });
         }
@@ -45,7 +38,7 @@ namespace WebStore.Web.Controllers
             return RedirectToAction("Index", "CreateAuction");
         }
 
-        
+        /*
         public ActionResult Buy(int? id)
         {
             if (id == null)
@@ -82,6 +75,7 @@ namespace WebStore.Web.Controllers
                 return Content("Not enough credit");
             }
         }
+        */
        public ActionResult Details (int? id)
         {
             if (id == null)
@@ -90,7 +84,7 @@ namespace WebStore.Web.Controllers
             }
 
             var auction = _auctionService.FindAuction(id.Value);
-            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller=auction.Seller ,Date_Added=auction.Date_Added, Description=auction.Description, Image_Path=auction.Image_Path});
+            return View(new ItemsViewModel {Name=auction.Name,Price=auction.Price ,Seller_Id=auction.Seller_Id ,Date_Added=auction.Date_Added, Description=auction.Description, Image_Path=auction.Image_Path});
         }
 
     }

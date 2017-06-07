@@ -27,14 +27,15 @@ namespace WebStore.Web.Controllers
         public ActionResult Index(AuctionViewModel avm)
         {
             AuctionDto act = new AuctionDto();
-            act.Seller = new UserDto();
-            act.Seller.UserName =Session["UserName"].ToString();
-            avm.UserName = Session["UserName"].ToString();
+            act.Seller_Id= Convert.ToInt32(Session["UserId"]);
+            avm.UserName = _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             avm.Credit = Convert.ToDouble(_userService.GetUserCredit(new UserDto { UserName= avm.UserName}));
 
             var auctionsSold = _auctionService.GetAllSold(act);
             var auctionsBought = _auctionService.GetAllBought(act);
             return View(new AuctionViewModel {AuctionsBought = auctionsBought, AuctionsSold = auctionsSold, UserName = avm.UserName,Credit= avm.Credit });
-        }
+        
+            
+            }
     }
 }

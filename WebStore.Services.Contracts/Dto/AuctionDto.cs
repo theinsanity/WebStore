@@ -11,8 +11,8 @@ namespace WebStore.Services.Contracts.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public UserDto Buyer { get; set; }
-        public UserDto Seller { get; set; }
+        public int? Buyer_Id { get; set; }
+        public int Seller_Id { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
         public string Image_Path { get; set; }

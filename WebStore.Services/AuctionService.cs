@@ -25,7 +25,7 @@ namespace WebStore.Services
                 if (auction.Status == "Pending")
                 {
                     
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price,Seller = new UserDto {UserName = auction.Seller.UserName } });
+                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price,Seller_Id = auction.Seller_Id });
                 }
                     
             }
@@ -37,27 +37,20 @@ namespace WebStore.Services
             Auction act = new Auction();
             act.Name = auction.Name;
             act.Price = auction.Price;
-            act.Seller = new User();
-            act.Seller.UserName = auction.Seller.UserName;
+            act.Seller_Id = auction.Seller_Id;
             act.Description = auction.Description;
             act.Image_Path = auction.Image_Path;
+            /*
             act.Date_Added = DateTime.Now;
             act.Date_Purchased = null;
+            */
            _auctionRepository.CreateAuction(act);
         }
         public void UpdateAuction (AuctionDto auction)
         {
             Auction act = new Auction();
             act.Id = auction.Id;
-            act.Buyer = new User();
-            if(act.Buyer == null)
-            {
-                auction.Buyer = null;
-            }
-            else
-            {
-                act.Buyer.UserName = auction.Buyer.UserName;
-            }
+            act.Buyer_Id = auction.Buyer_Id;
            
             _auctionRepository.UpdateAuction(act);
 
@@ -69,8 +62,7 @@ namespace WebStore.Services
         {
 
             Auction auct = new Auction();
-            auct.Seller = new User();
-            auct.Seller.UserName = act.Seller.UserName;
+            auct.Seller_Id = act.Seller_Id;
             auct.Status = "Sold";
 
 
@@ -79,7 +71,7 @@ namespace WebStore.Services
             foreach (Auction auction in _auctionRepository.GetAllSold(auct))
             {
                 
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Buyer = new UserDto { UserName = auction.Buyer.UserName } });
+                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Buyer_Id=auction.Buyer_Id });
             }
             return auctionDtos;
 
@@ -88,15 +80,14 @@ namespace WebStore.Services
         public IEnumerable<AuctionDto> GetAllBought(AuctionDto act)
         {
             Auction auct = new Auction();
-            auct.Buyer = new User();
-            auct.Buyer.UserName = act.Seller.UserName;
+            auct.Buyer_Id = act.Seller_Id;
             auct.Status = "Sold";
 
             var auctionDtos = new List<AuctionDto>();
 
             foreach (Auction auction in _auctionRepository.GetAllBought(auct))
             {
-                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller = new UserDto {UserName = auction.Seller.UserName } });
+                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price, Seller_Id =  auction.Seller_Id});
             }
             return auctionDtos;
 
@@ -108,21 +99,15 @@ namespace WebStore.Services
             auction.Id = auct.Id;
             auction.Name = auct.Name;
             auction.Price = auct.Price;
-            auction.Buyer = new UserDto();
+            auction.Buyer_Id = auct.Buyer_Id;
+
             auction.Description = auct.Description;
             auction.Image_Path = auct.Image_Path;
             auction.Date_Purchased = auct.Date_Purchased;
             auction.Date_Added = auct.Date_Added;
-            if (auct.Buyer == null)
-            {
-                auction.Buyer.UserName = null;
-            }
-            else
-            {
-                auction.Buyer.UserName = auct.Buyer.UserName;
-            }
-            auction.Seller = new UserDto();
-            auction.Seller.UserName = auct.Seller.UserName;
+
+
+            auction.Seller_Id = auct.Seller_Id;
             auction.Price = auct.Price;
 
             return auction;

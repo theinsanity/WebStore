@@ -31,29 +31,31 @@ namespace WebStore.Web.Controllers
                 user.UserName = newUser.UserName;
                 user.Email = newUser.Email;
                 user.Password = newUser.Password;
-                /* check for email */
+               
+                
                 try
                 {
-                    /* checking if email exists already in our db */
-                    bool EmailCheck =_userService.CheckUserEmail(user);
-                    if (EmailCheck == false)
+                 
+                    if (_userService.CheckUserEmail(user))
                         return Content("Email exists!");
                 }
-                catch
+                catch(Exception e)
                 {
-                    return Content("Check Email Error");
+                    throw e;
                 }
+                
                 try
                 {
-                    /* checking if username already exists in our db */
+                    
                     bool UsernameCheck = _userService.CheckUserUsername(user);
-                    if (UsernameCheck == false)
+                    if (UsernameCheck)
                         return Content("Username exists!");
                 }
                 catch
                 {
                     return Content("Check Username Error");
                 }
+               
                 try
                 {
                     /* creating acc */

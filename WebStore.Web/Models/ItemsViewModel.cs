@@ -10,7 +10,7 @@ namespace WebStore.Web.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public UserDto Seller { get; set; }
+        public int Seller_Id { get; set; }
         public string Description { get; set; }
         public string Image_Path { get; set; }
         public DateTime? Date_Added { get; set; }

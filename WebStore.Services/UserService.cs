@@ -13,11 +13,13 @@ namespace WebStore.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IBCryptHashService _bcryptHashService;
+
         public UserService(IUserRepository userRepository, IBCryptHashService bcryptHashService)
         {
             _userRepository = userRepository;
             _bcryptHashService = bcryptHashService;
         }
+
         public IEnumerable<UserDto> GetAllUsers()
         {
             var userDtos = new List<UserDto>();
@@ -38,8 +40,21 @@ namespace WebStore.Services
                 usr.Password = user.Password;
                 usr.Credit = user.Credit;
 
-                bool var = _userRepository.CheckUserEmail(usr);
-                return var;
+            try
+            {
+                var varr = _userRepository.GetUserByEmail(usr);
+                if (varr == null)
+                    return false;
+                else
+                    return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            
+
+
         }
         
        public bool CheckUserUsername(UserDto user)
@@ -50,9 +65,12 @@ namespace WebStore.Services
             usr.Password = user.Password;
             usr.Credit = user.Credit;
 
-            bool var = _userRepository.CheckUserUsername(usr);
-            return var;
-           
+            var var = _userRepository.GetUserByUsername(usr);
+            if (var == null)
+                return false;
+            else
+                return true;
+
         }
         public void CreateUser(UserDto user)
         {
@@ -68,7 +86,7 @@ namespace WebStore.Services
             var usr = new User();
             usr.UserName = user.UserName;            
             var usr1 = new User();
-            usr1 = _userRepository.GetUser(usr);
+            usr1 = _userRepository.GetUserByUsername(usr);
             return _bcryptHashService.IsPasswordsEqual(user.Password, usr1.Password);
 
         }
@@ -76,15 +94,30 @@ namespace WebStore.Services
         {
             var usr = new User();
             usr.UserName = user.UserName;
-            return _userRepository.GetUserCredit(usr);
+            var vr =  _userRepository.GetUserByUsername(usr);
+            return vr.Credit;
+
         }
+        public UserDto GetUserId(UserDto user)
+        {
+            var vr = _userRepository.GetUserByUsername(new User { UserName= user.UserName });
+            return new UserDto {UserId = vr.UserId };
+        }
+        public UserDto GetUserById(UserDto user)
+        {
+            var vr = _userRepository.GetUserById(new User {UserId=user.UserId });
+            return new UserDto {  UserName=vr.UserName, Credit=vr.Credit};
+        }
+
+
+        /*
         public void UpdateUser(UserDto user,AuctionDto auction)
         {
             var usr = new User();
             usr.UserName = user.UserName; 
             var usr1 = new User();
             usr1.UserName = auction.Seller.UserName;
-            var credit = _userRepository.GetUserCredit(usr1);
+            var credit = _userRepository.GetUserByUsername(usr1);
             var usr2 = new User();
             usr2.UserName = auction.Seller.UserName;
             if (user.Credit - auction.Price >= 0)
@@ -99,5 +132,7 @@ namespace WebStore.Services
             }
             _userRepository.UpdateUser(usr, usr2);
         }
+        */
     }
+    
 }
