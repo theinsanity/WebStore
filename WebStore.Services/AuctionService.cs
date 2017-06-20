@@ -25,7 +25,7 @@ namespace WebStore.Services
                 if (auction.Status == "Pending")
                 {
                     
-                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price,Seller_Id = auction.Seller_Id });
+                    auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price,Seller_Id = auction.Seller_Id ,Image_Path = auction.Image_Path});
                 }
                     
             }
@@ -113,5 +113,32 @@ namespace WebStore.Services
             return auction;
 
         }
+        public void DeleteAuction(AuctionDto auction)
+        {
+            Auction act = new Auction();
+            act.Id = auction.Id;
+
+            _auctionRepository.DeleteAuction(act);
+
+
+        }
+        public IEnumerable<AuctionDto> GetAllUsersAuctions(AuctionDto act)
+        {
+            Auction auct = new Auction();
+            
+            auct.Seller_Id = act.Seller_Id;
+
+
+            var auctionDtos = new List<AuctionDto>();
+
+            foreach (Auction auction in _auctionRepository.GetAllUsersAuctions(auct))
+            {
+                auctionDtos.Add(new AuctionDto { Id = auction.Id, Name = auction.Name, Price = auction.Price });
+            }
+            return auctionDtos;
+
+        }
+
+
     }
 }

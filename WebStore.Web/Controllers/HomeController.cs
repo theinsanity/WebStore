@@ -36,7 +36,7 @@ namespace WebStore.Web.Controllers
             var user = new UserDto();
             user.UserName =  _userService.GetUserById(new UserDto { UserId = Convert.ToInt32(Session["UserId"]) }).UserName;
             user.Credit = _userService.GetUserCredit(new UserDto { UserName = user.UserName });
-            return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit });
+            return View(new AuctionViewModel { Auctions = auctions ,UserName=user.UserName,Credit=user.Credit,UserId = Convert.ToInt32(Session["UserId"])  });
         }
         
         public ActionResult CreateAuction()
@@ -80,6 +80,35 @@ namespace WebStore.Web.Controllers
                 return Content("Not enough credit");
             }
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var auction = _auctionService.FindAuction(id.Value);
+
+            if(auction.Seller_Id!= Convert.ToInt32(Session["UserId"]))
+            {
+                _auctionService.DeleteAuction(auction);
+                return RedirectToAction("Index", "Home", null);
+
+            }
+            else
+            {
+                return Content("You cant delete others auctions");
+            }
+
+            
+           
+        }
+
+
+
+
+
 
         public ActionResult Details (int? id)
         {

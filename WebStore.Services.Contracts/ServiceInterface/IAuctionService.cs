@@ -12,9 +12,11 @@ namespace WebStore.Services.Contracts.ServiceInterface
         IEnumerable<AuctionDto> GetAllAuctions();
         void CreateAuction(AuctionDto auction);
         void UpdateAuction(AuctionDto auction);
+        void DeleteAuction(AuctionDto auction);
         IEnumerable<AuctionDto> GetAllSold(AuctionDto act);
         IEnumerable<AuctionDto> GetAllBought(AuctionDto act);
         AuctionDto FindAuction(int id);
+        IEnumerable<AuctionDto> GetAllUsersAuctions(AuctionDto act);
     }
     
 }

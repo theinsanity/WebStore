@@ -9,21 +9,26 @@
 
     <h1> All auctions</h1>
     <table class="table table-hover">
+      
+
         @foreach (var auction in Model.Auctions)
         {
             <tr>
-                <td>@auction.Id </td>
-                <td >@auction.Name</td>
-                <td>@auction.Price</td>
-                <td >@auction.BoSName</td>
-                
-            <td style="background-color:aqua" align="center">   
-                @Html.ActionLink("Details", "Details", new { id = auction.Id }, new { @style = "color:black" })
-            </td>
-
-                <td class="btn btn-primary">
-                @Html.ActionLink("Buy", "Buy", new { id=auction.Id }, new { @style="color:black" })
+                <td>
+                    <img src="@auction.Image_Path" alt="No picture" style="width:140px;height:140px;"/>
                 </td>
+                <td align="left" >@Html.ActionLink(auction.Name,"Details",new { id = auction.Id })
+                <br />
+               <small> € @auction.Price </small>
+                <br />
+                
+                Seller:  @auction.BoSName
+                
+                <br />
+                @Html.ActionLink("Buy", "Buy", new { id = auction.Id }, new {@class="btn btn-primary" })
+
+                </td>
+                
             </tr>
             
             

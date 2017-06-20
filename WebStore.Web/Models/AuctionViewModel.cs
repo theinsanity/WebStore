@@ -11,6 +11,7 @@ namespace WebStore.Web.Models
         public IEnumerable<AuctionDto> AuctionsBought { get; set; }
         public IEnumerable<AuctionDto> AuctionsSold { get;  set; }
 
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public double Credit { get; set; }
         public int Buyer_Id { get; set; }

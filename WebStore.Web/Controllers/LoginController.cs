@@ -29,6 +29,16 @@ namespace WebStore.Web.Controllers
                 {
                     Session["UserId"] = _userService.GetUserId(usr).UserId;
                     //double credit = _userService.GetUserCredit(usr);
+
+
+                    if (user.RememberMe == true)
+                    {
+                        HttpCookie cookie = new HttpCookie("UserInfo");
+                        cookie["Name"] = usr.UserName;
+                        cookie.Expires = DateTime.Now.AddDays(30);
+                        Response.Cookies.Add(cookie);
+                    }
+
                     return RedirectToAction("Index", "Home", null);
                 }
                 else
@@ -45,7 +55,17 @@ namespace WebStore.Web.Controllers
         public ActionResult Index()
         {
             var loginUser = new LoginViewModel();
-            return View(loginUser);
+            var cookie = Request.Cookies["UserInfo"];
+            if(cookie == null)
+            {
+                return View(loginUser);
+            }
+            else
+            {
+                loginUser.UserName = cookie["Name"];
+                return View(loginUser);
+            }
+            
         }
         public ActionResult Create()
         {

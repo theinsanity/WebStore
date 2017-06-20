@@ -14,5 +14,7 @@ namespace WebStore.Web.Models
         [StringLength(50, MinimumLength = 3)]
         [Required]
         public string Password { get; set; }
+        public bool RememberMe { get; set; }
+
     }
 }

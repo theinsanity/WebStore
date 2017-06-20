@@ -1,0 +1,72 @@
+﻿@model WebStore.Web.Models.AuctionViewModel
+
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+
+
+<body>
+
+    <div class="row">
+        <div align="left" class="col-md-6">@Html.ActionLink(Model.UserName, "Index", "User")</div>
+        <div class="col-md-6" align="right">@Html.ActionLink(Model.Credit.ToString(), "Index", "Credit")</div>
+    </div>
+
+
+    <!-- pera treba da postane Model, tj da se vuce iz repozitorijuma-->
+    <!-- Credit treba da se vuce iz repozitorijuma za tu sesiju-->
+    <div id="nav">
+
+
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <p>Sold Items</p>
+                <table class="table table-hover">
+                    @foreach (var auction1 in Model.AuctionsSold)
+                    {
+                        <tr>
+                            <td>@auction1.Id</td>
+                            <td>@auction1.Name</td>
+                            <td>@auction1.Price</td>
+                            <td>@auction1.BoSName</td>
+                            <td style="background-color:aqua" align="center">
+                                @Html.ActionLink("Details", "Details", new { id = auction1.Id }, new { @style = "color:black" })
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+            <div class="col-md-6">
+                <p>Bought Items</p>
+                <table class="table table-hover">
+                    @foreach (var auction1 in Model.AuctionsBought)
+                    {
+                        <tr>
+                            <td>@auction1.Id</td>
+                            <td>@auction1.Name</td>
+                            <td>@auction1.Price</td>
+                            <td>@auction1.BoSName</td>
+                            <td style="background-color:aqua" align="center">
+                                @Html.ActionLink("Details", "Details", new { id = auction1.Id }, new { @style = "color:black" })
+                            </td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -38,8 +38,15 @@
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
                 @Html.ValidationMessageFor(m => m.Password)
             </div>
+            <div>
+                @Html.CheckBoxFor(m => m.RememberMe)
+                Remember me
+               
+            </div>
+
+
          <div>
-            
+            <br />
                 <input class="btn btn-primary" type="submit" value="submit" align="left" />
             <div style="float:right">
                 @Html.ActionLink("Register", "Index", "CreateAccount", null, new { @class = "btn btn-default"  })

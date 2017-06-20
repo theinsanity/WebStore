@@ -295,5 +295,61 @@ namespace WebStore.Data
             return FindAuctionCommand(_connectionString ,id);
         }
 
+        private void DeleteCommand(string connectionString, Auction auction)
+        {
+            const string queryString = "Delete from [Auction] where Id=@id";
+            using (var connection = new SqlConnection(
+                     connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@id", auction.Id);
+                command.ExecuteNonQuery();
+            }
+        }
+        public void DeleteAuction(Auction auction)
+        {
+            DeleteCommand(_connectionString, auction);
+        }
+
+       private IEnumerable<Auction> GetAllUsrAuctions(string connectionString, Auction auction)
+        {
+            const string queryString = "Select * from [Auction] where Status='Pending' and Seller_Id=@ide";
+            using (SqlConnection connection = new SqlConnection(
+                      connectionString))
+            {
+                connection.Open();
+
+                var command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@ide", auction.Seller_Id);
+
+                var reader = command.ExecuteReader();
+
+                var result = new List<Auction>();
+                if (reader.HasRows != true)
+                {
+                    return result;
+                }
+
+                while (reader.Read())
+                {
+                    var act = MapTableEnityToObject(reader);
+                    result.Add(act);
+
+                }
+
+
+                return result;
+            }
+        }
+
+       public  IEnumerable<Auction> GetAllUsersAuctions(Auction auction)
+        {
+            return GetAllUsrAuctions(_connectionString, auction);
+        }
+
+
+
     }
 }

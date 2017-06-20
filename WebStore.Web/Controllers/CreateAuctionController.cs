@@ -30,6 +30,10 @@ namespace WebStore.Web.Controllers
                 //auction.Seller.UserName = Session["UserName"].ToString();
                 auction.Description = newAuction.Description;
                 auction.Image_Path = newAuction.Image_Path;
+                if(auction.Image_Path == null)
+                {
+                    auction.Image_Path = "http://www.bernunlimited.com/c.4436185/sca-dev-vinson/img/no_image_available.jpeg";
+                }
 
                 try
                 {
